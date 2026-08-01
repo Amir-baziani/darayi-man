@@ -1,6 +1,6 @@
 'use strict';
 
-const CACHE_VERSION = 'darayi-man-v5.1.0';
+const CACHE_VERSION = 'darayi-man-v6.1.0';
 const APP_SHELL = [
   './',
   './index.html',

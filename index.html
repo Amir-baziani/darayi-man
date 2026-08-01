@@ -2,7 +2,7 @@
 <html lang="fa" dir="rtl">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content" />
   <meta name="color-scheme" content="light dark" />
   <meta name="theme-color" content="#0b1020" />
   <meta name="description" content="دارایی من؛ مدیریت مالی شخصی، بودجه، هدف‌ها، اقساط و دنگ با تقویم فارسی" />
@@ -901,6 +901,186 @@
     .split-add-person { display:flex; align-items:center; justify-content:center; gap:7px; }
     .split-add-person svg { width:18px; height:18px; flex:0 0 18px; }
 
+
+
+    /* ===== نسخه ۷: پایداری Safari، clipping واقعی و خوانایی موبایل ===== */
+    html, body {
+      width:100%; max-width:100%; overflow-x:hidden; overflow-x:clip;
+      -webkit-text-size-adjust:100%; text-size-adjust:100%;
+      overscroll-behavior-x:none;
+    }
+    body {
+      font-family:Vazirmatn,-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Arabic",Tahoma,Arial,sans-serif;
+    }
+    button, input, select, textarea { touch-action:manipulation; }
+    .app-shell,.main,.content,.grid,.dashboard-main,.card,.finance-hero,.topbar,.bottom-nav { max-width:100%; }
+    .grid > *, .dashboard-main > *, .content > *, .card > * { min-width:0; }
+    canvas,svg,img { max-width:100%; }
+    .chart-box { min-width:0; overflow:hidden; }
+    .chart-box canvas { width:100%!important; max-width:100%!important; }
+
+    /* Safari گاهی لایهٔ filter را بیرون از border-radius نقاشی می‌کند. */
+    .stat-card,.finance-hero,.split-card,.account-card,.insight-card {
+      isolation:isolate; contain:paint; overflow:hidden; overflow:clip;
+      -webkit-mask-image:-webkit-radial-gradient(white,black);
+      transform:translateZ(0);
+    }
+    .stat-card::after {
+      filter:none!important;
+      width:112px; height:112px; left:-24px; bottom:-30px;
+      opacity:.92;
+      background:radial-gradient(circle,var(--tint,var(--accent-soft)) 0 36%,transparent 72%);
+    }
+    .finance-hero::before,.finance-hero::after { transform:translateZ(0); }
+    .bottom-nav { overflow:hidden; overflow:clip; contain:paint; isolation:isolate; }
+    .bottom-nav button {
+      font-weight:760; line-height:1.25; letter-spacing:0;
+      color:color-mix(in srgb,var(--text) 78%,var(--muted));
+    }
+    .bottom-nav button span { opacity:1; text-shadow:0 0 .01px currentColor; }
+    .bottom-nav button.active { font-weight:850; color:var(--accent); }
+    .bottom-nav button svg { stroke-width:1.9; }
+    .toast-stack { pointer-events:none; }
+    .toast { pointer-events:none; }
+    .toast button { pointer-events:auto; }
+
+    /* جلوگیری از زوم خودکار فرم‌ها در iOS که باعث نمای بسیار بزرگ و جابه‌جایی افقی می‌شود. */
+    @media(max-width:860px){
+      input.field,select.select,textarea.textarea,.search-box input {
+        font-size:16px!important;
+      }
+      .bottom-nav button { font-size:10.5px; }
+      .bottom-nav button svg { width:20px; height:20px; }
+      .main { width:100%; min-width:0; }
+      .content { width:100%; min-width:0; overflow-x:clip; }
+    }
+    @media(max-width:390px){
+      .bottom-nav button { font-size:10px; padding-inline:1px; }
+      .bottom-nav { column-gap:1px; }
+    }
+
+    /* سفر و دنگ چندپرداختی */
+    .split-toolbar-actions{display:flex;gap:8px;flex-wrap:wrap;margin-inline-start:auto}
+    .trip-summary-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:12px 0}
+    .trip-summary-item{padding:12px;border-radius:15px;background:var(--surface-soft);border:1px solid var(--border-soft);min-width:0}
+    .trip-summary-item span{display:block;color:var(--muted);font-size:9px}
+    .trip-summary-item strong{display:block;margin-top:5px;font-size:12px;min-width:0}
+    .trip-summary-item .money-ui{align-items:flex-start}
+    .trip-section{margin-top:16px}
+    .trip-section-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:9px}
+    .trip-section-head h4{margin:0;font-size:12px}
+    .trip-section-head p{margin:2px 0 0;color:var(--muted);font-size:9px}
+    .trip-expense-list,.trip-balance-list,.trip-transfer-list{display:grid;gap:8px}
+    .trip-expense-row,.trip-balance-row,.trip-transfer-row{
+      display:grid;align-items:center;gap:9px;padding:10px;border-radius:14px;background:var(--surface-soft);border:1px solid var(--border-soft);min-width:0
+    }
+    .trip-expense-row{grid-template-columns:38px minmax(0,1fr) auto auto}
+    .trip-balance-row{grid-template-columns:34px minmax(0,1fr) auto}
+    .trip-transfer-row{grid-template-columns:34px minmax(0,1fr) auto}
+    .trip-row-icon{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;color:var(--accent);background:var(--accent-soft)}
+    .trip-row-icon svg{width:19px;height:19px}
+    .trip-row-main{min-width:0}
+    .trip-row-main strong{display:block;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .trip-row-main span{display:block;margin-top:3px;color:var(--muted);font-size:8.5px;line-height:1.6}
+    .trip-row-money{text-align:left;min-width:0}
+    .trip-row-money .money-ui{align-items:flex-end;justify-content:flex-end}
+    .trip-row-actions{display:flex;gap:4px}
+    .trip-row-actions .icon-btn{width:34px;min-height:34px;border-radius:10px}
+    .trip-transfer-row.done{opacity:.58}
+    .trip-transfer-arrow{color:var(--muted);font-size:9px}
+    .trip-transfer-button{white-space:nowrap}
+    .trip-optimized-note{display:flex;align-items:flex-start;gap:8px;padding:10px 11px;border-radius:13px;background:var(--success-soft);color:var(--success);font-size:9px;line-height:1.7}
+    .trip-optimized-note svg{width:17px;height:17px;flex:0 0 auto;margin-top:1px}
+    .group-person-list{display:grid;gap:8px}
+    .group-person-row{display:grid;grid-template-columns:34px minmax(0,1fr) auto;gap:8px;align-items:center;padding:8px;border-radius:14px;background:var(--surface-soft);border:1px solid var(--border-soft)}
+    .group-person-row .person-avatar{margin:0;border:0;background:var(--accent-soft);color:var(--accent)}
+    .expense-person-row{display:grid;grid-template-columns:28px 34px minmax(0,1fr) minmax(82px,.7fr) minmax(82px,.7fr);gap:7px;align-items:center;padding:8px;border-radius:14px;background:var(--surface-soft);border:1px solid var(--border-soft);min-width:0}
+    .expense-person-row.is-excluded{opacity:.48}
+    .expense-person-row .person-avatar{margin:0;border:0;background:var(--accent-soft);color:var(--accent)}
+    .expense-person-name{min-width:0;font-size:10px;font-weight:750;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .expense-include{width:20px;height:20px;accent-color:var(--accent)}
+    .expense-calculated{min-width:0;text-align:left;font-size:9px;color:var(--muted)}
+    .expense-calculated .money-ui{align-items:flex-end;justify-content:flex-end}
+    .split-card-meta{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-top:6px;color:var(--muted);font-size:9px}
+    .split-card-meta i{width:3px;height:3px;border-radius:50%;background:currentColor;opacity:.55}
+    @media(max-width:760px){
+      .split-toolbar-actions{width:100%;margin:0}.split-toolbar-actions .btn{flex:1}
+      .trip-summary-grid{grid-template-columns:1fr 1fr}.trip-summary-item:last-child{grid-column:span 2}
+      .expense-person-row{grid-template-columns:24px 32px minmax(0,1fr) minmax(74px,.75fr)}
+      .expense-calculated{grid-column:3/5;text-align:right;padding-right:2px}
+      .expense-calculated .money-ui{justify-content:flex-start;align-items:flex-start}
+    }
+    @media(max-width:430px){
+      .trip-expense-row{grid-template-columns:36px minmax(0,1fr) auto}.trip-expense-row .trip-row-actions{grid-column:2/4;justify-content:flex-end}
+      .trip-transfer-row{grid-template-columns:32px minmax(0,1fr)}.trip-transfer-button{grid-column:1/3;width:100%}
+      .trip-summary-grid{grid-template-columns:1fr}.trip-summary-item:last-child{grid-column:auto}
+      .expense-person-row{grid-template-columns:22px 30px minmax(0,1fr) minmax(70px,.72fr);gap:5px}
+    }
+
+  
+
+    /* ===== نسخه ۷.۱: انتخاب‌گر تاریخ شمسی یکپارچه ===== */
+    .jalali-date-shell{display:grid;gap:6px;min-width:0}
+    .jalali-date-field{
+      width:100%;min-height:58px;padding:8px 11px;border:1px solid var(--border-soft);border-radius:15px;
+      background:var(--surface-soft);color:var(--text);display:grid;grid-template-columns:38px minmax(0,1fr) 24px;
+      align-items:center;gap:9px;text-align:right;cursor:pointer;font-family:inherit;transition:border-color .2s ease,background .2s ease,box-shadow .2s ease,transform .16s ease;
+      -webkit-tap-highlight-color:transparent;overflow:hidden;
+    }
+    .jalali-date-field:hover{background:var(--surface-strong);border-color:rgba(var(--accent-rgb),.28)}
+    .jalali-date-field:focus-visible{outline:0;border-color:rgba(var(--accent-rgb),.52);box-shadow:0 0 0 4px var(--accent-soft)}
+    .jalali-date-field:active{transform:scale(.985)}
+    .jalali-date-icon{width:38px;height:38px;border-radius:12px;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center}
+    .jalali-date-icon svg{width:19px;height:19px}
+    .jalali-date-copy{min-width:0;display:grid;gap:2px;align-content:center}
+    .jalali-date-copy strong{font-size:12px;line-height:1.65;font-weight:850;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .jalali-date-copy small{font-size:9px;line-height:1.55;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .jalali-date-field.is-empty .jalali-date-copy strong{color:var(--muted);font-weight:750}
+    .jalali-date-chevron{width:24px;height:24px;display:grid;place-items:center;color:var(--muted)}
+    .jalali-date-chevron svg{width:16px;height:16px}
+    .jalali-date-shell>.help{margin:0 2px}
+
+    .date-picker-layer{position:fixed;inset:0;z-index:260;display:none;align-items:center;justify-content:center;padding:18px max(18px,var(--safe-right)) calc(18px + var(--safe-bottom)) max(18px,var(--safe-left));background:rgba(4,7,17,.48);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+    .date-picker-layer.open{display:flex;animation:fadeIn .18s ease}
+    .jalali-picker{width:min(390px,100%);border-radius:27px;padding:16px;overflow:hidden;animation:modalIn .28s var(--ease)}
+    .jalali-picker-head{display:grid;grid-template-columns:42px minmax(0,1fr) 42px;align-items:center;gap:8px;margin-bottom:10px}
+    .jalali-picker-head .icon-btn{width:42px;min-height:42px;border-radius:13px}
+    .jalali-picker-title{text-align:center;min-width:0}
+    .jalali-picker-title strong{display:block;font-size:14px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .jalali-picker-title span{display:block;margin-top:2px;font-size:9px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .jalali-picker-today{width:100%;border:0;border-radius:12px;padding:8px 10px;margin-bottom:10px;background:var(--accent-soft);color:var(--accent);font-family:inherit;font-size:10px;font-weight:850;cursor:pointer}
+    .jalali-picker .weekdays{margin-bottom:3px}
+    .jalali-picker .weekdays span{font-size:9px;font-weight:800}
+    .jalali-picker-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px;direction:rtl}
+    .jalali-picker-blank{aspect-ratio:1;min-height:38px}
+    .jalali-picker-day{position:relative;aspect-ratio:1;min-height:38px;border:0;border-radius:12px;background:transparent;color:var(--text);display:grid;place-content:center;gap:1px;font-family:inherit;cursor:pointer;transition:.16s ease}
+    .jalali-picker-day span{font-size:11px;font-weight:800}
+    .jalali-picker-day small{font-size:7px;color:var(--faint)}
+    .jalali-picker-day:hover{background:var(--surface-soft)}
+    .jalali-picker-day.today:not(.selected){box-shadow:inset 0 0 0 1.5px rgba(var(--accent-rgb),.42);color:var(--accent)}
+    .jalali-picker-day.selected{background:linear-gradient(145deg,var(--accent),var(--accent-2));color:#fff;box-shadow:0 8px 20px rgba(var(--accent-rgb),.24)}
+    .jalali-picker-day.selected small{color:rgba(255,255,255,.76)}
+    .jalali-picker-actions{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:13px;padding-top:12px;border-top:1px solid var(--border-soft)}
+    .jalali-picker-actions .btn{min-height:40px}
+    .jalali-picker-actions .btn:last-child{margin-right:auto}
+
+    @media(max-width:760px){
+      .date-picker-layer{align-items:flex-end;padding:0 var(--safe-right) var(--safe-bottom) var(--safe-left)}
+      .jalali-picker{width:100%;border-radius:28px 28px 0 0;padding:17px 17px calc(17px + var(--safe-bottom));max-height:88dvh;overflow:auto}
+      .jalali-date-field{min-height:60px}
+      .jalali-date-copy strong{font-size:13px}
+      .jalali-date-copy small{font-size:9.5px}
+      .jalali-picker-day,.jalali-picker-blank{min-height:42px}
+      .jalali-picker-day span{font-size:12px}
+    }
+    @media(max-width:390px){
+      .jalali-picker{padding-inline:13px}
+      .jalali-picker-grid{gap:3px}
+      .jalali-picker-day,.jalali-picker-blank{min-height:39px}
+      .jalali-date-field{grid-template-columns:36px minmax(0,1fr) 22px;padding-inline:9px;gap:8px}
+      .jalali-date-icon{width:36px;height:36px}
+    }
+
   </style>
 </head>
 <body>
@@ -951,6 +1131,7 @@
   </div>
 
   <div class="modal-layer" id="modalLayer" role="dialog" aria-modal="true" aria-hidden="true"><div class="modal glass" id="modal"></div></div>
+  <div class="date-picker-layer" id="datePickerLayer" role="dialog" aria-modal="true" aria-hidden="true"><div class="jalali-picker glass" id="jalaliPicker"></div></div>
   <div class="toast-stack" id="toastStack" aria-live="polite"></div>
   <input type="file" id="importInput" accept=".json,.csv,.xls,.xml,application/json,text/csv,application/vnd.ms-excel" hidden />
 
@@ -959,7 +1140,7 @@
     'use strict';
 
     const APP_KEY = 'personal_finance_fa_v3';
-    const SCHEMA_VERSION = 6;
+    const SCHEMA_VERSION = 7;
     const MAX_UNDO = 20;
     const $ = (s, root=document) => root.querySelector(s);
     const $$ = (s, root=document) => [...root.querySelectorAll(s)];
@@ -1521,7 +1702,7 @@
     function recentMonths(count){ return Array.from({length:count},(_,i)=>shiftPersianStart(new Date(),-i)); }
     function budgetSpent(b){ const [s,e]=currentMonthRange(); return state.transactions.filter(t=>t.type==='expense'&&t.categoryId===b.categoryId&&t.date>=s&&t.date<=e).reduce((x,t)=>x+t.amount,0); }
     function topExpenseCategory(){ const [s,e]=currentMonthRange(); const map={}; state.transactions.filter(t=>t.type==='expense'&&t.date>=s&&t.date<=e).forEach(t=>map[t.categoryId]=(map[t.categoryId]||0)+t.amount); const top=Object.entries(map).sort((a,b)=>b[1]-a[1])[0]; if(!top)return null; return {name:categoryById(top[0])?.name||'بدون دسته',amount:top[1]}; }
-    function getNextInstallment(i){ if(i.paidCount>=i.count)return null; const start=parseDate(i.startDate); const due=addMonths(start,i.paidCount); const maxDay=new Date(due.getFullYear(),due.getMonth()+1,0).getDate(); due.setDate(Math.min(num(i.dayOfMonth)||start.getDate(),maxDay)); return {date:isoDate(due),index:i.paidCount+1}; }
+    function getNextInstallment(i){ if(i.paidCount>=i.count)return null; const start=parseDate(i.startDate),monthStart=shiftPersianStart(start,i.paidCount),nextStart=shiftPersianStart(monthStart,1),lastDay=new Date(nextStart); lastDay.setDate(lastDay.getDate()-1); const maxDay=persianParts(lastDay).day,wanted=clamp(num(i.dayOfMonth)||persianParts(start).day,1,maxDay),due=new Date(monthStart); due.setDate(due.getDate()+wanted-1); return {date:isoDate(due),index:i.paidCount+1}; }
     function getUpcomingInstallments(){ return state.installments.map(i=>{const n=getNextInstallment(i);return n?{...n,id:i.id,title:i.title,amount:i.installmentAmount,days:daysBetween(todayISO(),n.date)}:null}).filter(Boolean).sort((a,b)=>a.date.localeCompare(b.date)); }
 
     function renderCalendar(){
@@ -1607,10 +1788,50 @@
     function openModal(title,body,onBind){
       $('#modal').innerHTML=`<div class="modal-head"><h3>${title}</h3><button class="modal-close" aria-label="بستن">${icons.close}</button></div>${body}`;
       $('#modalLayer').classList.add('open'); $('#modalLayer').setAttribute('aria-hidden','false'); document.body.style.overflow='hidden';
-      $('.modal-close').onclick=closeModal; onBind?.(); setTimeout(()=>$('#modal input:not([type=hidden]),#modal select')?.focus(),60);
+      $('.modal-close').onclick=closeModal; bindJalaliDateFields($('#modal')); onBind?.(); setTimeout(()=>$('#modal input:not([type=hidden]),#modal select')?.focus(),60);
     }
-    function closeModal(){ $('#modalLayer').classList.remove('open');$('#modalLayer').setAttribute('aria-hidden','true');document.body.style.overflow=''; }
+    function closeModal(){ closeJalaliDatePicker();$('#modalLayer').classList.remove('open');$('#modalLayer').setAttribute('aria-hidden','true');document.body.style.overflow=''; }
     function dateHelp(iso){ return `<div class="help" id="dateHelp">${formatFaDate(iso)} • ${formatGregorian(iso)}</div>`; }
+
+    function jalaliDateField(id,iso,{required=true,placeholder='انتخاب تاریخ'}={}){
+      const value=iso||'';
+      return `<div class="jalali-date-shell"><input type="hidden" id="${id}" value="${esc(value)}" data-jalali-value><button type="button" class="jalali-date-field ${value?'':'is-empty'}" data-jalali-for="${id}" data-jalali-required="${required?'1':'0'}" aria-label="${esc(placeholder)}"><span class="jalali-date-icon">${icons.calendar}</span><span class="jalali-date-copy"><strong>${value?formatFaDate(value):esc(placeholder)}</strong><small>${value?`میلادی: ${formatGregorian(value)}`:'تقویم هجری شمسی'}</small></span><span class="jalali-date-chevron">${icons.chevronDown}</span></button></div>`;
+    }
+    let jalaliPickerState={inputId:null,anchor:null,required:true};
+    function bindJalaliDateFields(root=document){
+      $$('[data-jalali-for]',root).forEach(btn=>{btn.onclick=()=>openJalaliDatePicker(btn.dataset.jalaliFor,btn.dataset.jalaliRequired!=='0')});
+    }
+    function refreshJalaliDateField(inputId){
+      const input=document.getElementById(inputId),btn=$(`[data-jalali-for="${inputId}"]`);if(!input||!btn)return;
+      const value=input.value,copy=$('.jalali-date-copy',btn),help=btn.closest('.jalali-date-shell')?.querySelector('.help');
+      btn.classList.toggle('is-empty',!value);
+      if(copy){copy.querySelector('strong').textContent=value?formatFaDate(value):btn.getAttribute('aria-label')||'انتخاب تاریخ';copy.querySelector('small').textContent=value?`میلادی: ${formatGregorian(value)}`:'تقویم هجری شمسی'}
+      if(help)help.textContent=value?`${formatFaDate(value)} • ${formatGregorian(value)}`:'تاریخی انتخاب نشده است';
+    }
+    function setJalaliDateValue(inputId,iso,{notify=true}={}){
+      const input=document.getElementById(inputId);if(!input)return;input.value=iso||'';refreshJalaliDateField(inputId);
+      if(notify){input.dispatchEvent(new Event('input',{bubbles:true}));input.dispatchEvent(new Event('change',{bubbles:true}))}
+    }
+    function openJalaliDatePicker(inputId,required=true){
+      const input=document.getElementById(inputId);if(!input)return;
+      jalaliPickerState={inputId,required,anchor:persianMonthStart(parseDate(input.value||todayISO()))};
+      renderJalaliDatePicker();
+      const layer=$('#datePickerLayer');layer.classList.add('open');layer.setAttribute('aria-hidden','false');
+    }
+    function closeJalaliDatePicker(){const layer=$('#datePickerLayer');layer.classList.remove('open');layer.setAttribute('aria-hidden','true')}
+    function shiftJalaliPickerMonth(offset){jalaliPickerState.anchor=shiftPersianStart(jalaliPickerState.anchor,offset);renderJalaliDatePicker()}
+    function renderJalaliDatePicker(){
+      const root=$('#jalaliPicker'),input=document.getElementById(jalaliPickerState.inputId);if(!root||!input)return;
+      const first=persianMonthStart(jalaliPickerState.anchor),parts=persianParts(first),selected=input.value||'',weekday=(first.getDay()+1)%7,days=[];
+      let d=new Date(first);
+      while(true){const p=persianParts(d);if(p.year!==parts.year||p.month!==parts.month)break;const iso=isoDate(d);days.push(`<button type="button" class="jalali-picker-day ${iso===todayISO()?'today':''} ${iso===selected?'selected':''}" data-jalali-day="${iso}" aria-label="${formatFaDate(iso)}"><span>${toFa(p.day)}</span><small>${toFa(d.getDate())}</small></button>`);d.setDate(d.getDate()+1)}
+      root.innerHTML=`<div class="jalali-picker-head"><button type="button" class="icon-btn" id="jalaliNext" aria-label="ماه بعد">${icons.chevronRight}</button><div class="jalali-picker-title"><strong>${formatMonthFa(first)}</strong><span>${formatMonthGr(first)}</span></div><button type="button" class="icon-btn" id="jalaliPrev" aria-label="ماه قبل">${icons.chevronLeft}</button></div><button type="button" class="jalali-picker-today" id="jalaliToday">رفتن به امروز • ${formatFaDate(todayISO())}</button><div class="weekdays">${['ش','ی','د','س','چ','پ','ج'].map(x=>`<span>${x}</span>`).join('')}</div><div class="jalali-picker-grid">${'<i class="jalali-picker-blank"></i>'.repeat(weekday)}${days.join('')}</div><div class="jalali-picker-actions">${jalaliPickerState.required?'':`<button type="button" class="btn btn-ghost" id="jalaliClear">پاک‌کردن تاریخ</button>`}<button type="button" class="btn" id="jalaliCancel">انصراف</button></div>`;
+      $('#jalaliNext').onclick=()=>shiftJalaliPickerMonth(1);$('#jalaliPrev').onclick=()=>shiftJalaliPickerMonth(-1);$('#jalaliToday').onclick=()=>{jalaliPickerState.anchor=persianMonthStart(parseDate(todayISO()));renderJalaliDatePicker()};$('#jalaliCancel').onclick=closeJalaliDatePicker;
+      $('#jalaliClear')?.addEventListener('click',()=>{setJalaliDateValue(jalaliPickerState.inputId,'');closeJalaliDatePicker()});
+      $$('[data-jalali-day]',root).forEach(btn=>btn.onclick=()=>{setJalaliDateValue(jalaliPickerState.inputId,btn.dataset.jalaliDay);closeJalaliDatePicker()});
+    }
+    $('#datePickerLayer').addEventListener('click',e=>{if(e.target===$('#datePickerLayer'))closeJalaliDatePicker()});
+    document.addEventListener('keydown',e=>{if(e.key==='Escape'&&$('#datePickerLayer').classList.contains('open')){e.stopPropagation();closeJalaliDatePicker()}});
     function accountOptions(selected){ return state.accounts.map(a=>`<option value="${a.id}" ${a.id===selected?'selected':''}>${esc(a.name)} — ${money(accountBalance(a.id))}</option>`).join(''); }
     function categoryOptions(type,selected){ return state.categories[type].map(c=>`<option value="${c.id}" ${c.id===selected?'selected':''}>${esc(c.name)}</option>`).join(''); }
 
@@ -1623,12 +1844,12 @@
         <div class="form-group"><label>از حساب</label><select class="select" id="txAccount" required>${accountOptions(t.accountId)}</select></div>
         <div class="form-group" id="toAccountGroup" style="display:${t.type==='transfer'?'grid':'none'}"><label>به حساب</label><select class="select" id="txToAccount">${accountOptions(t.toAccountId)}</select></div>
         <div class="form-group" id="categoryGroup" style="display:${t.type==='transfer'?'none':'grid'}"><label>دسته‌بندی</label><select class="select" id="txCategory">${categoryOptions(t.type==='income'?'income':'expense',t.categoryId)}</select></div>
-        <div class="form-group"><label>تاریخ</label><input class="field" type="date" id="txDate" value="${t.date}" required />${dateHelp(t.date)}</div>
+        <div class="form-group"><label>تاریخ شمسی</label>${jalaliDateField('txDate',t.date)}</div>
         <div class="form-group full"><label>شرح</label><textarea class="textarea" id="txNote" placeholder="شرح اختیاری تراکنش…">${esc(t.note||'')}</textarea></div>
       </div><div class="form-actions"><button type="button" class="btn" data-close-modal>انصراف</button><button class="btn btn-primary" type="submit">${id?'ذخیره تغییرات':'ثبت تراکنش'}</button></div></form>`,()=>{
         let selectedType=t.type;
         $$('[data-tx-type]').forEach(b=>b.onclick=()=>{if(b.dataset.txType==='transfer'&&state.accounts.length<2){toast('حساب مقصد لازم است','برای انتقال وجه حداقل دو حساب ایجاد کنید.','warning');return}selectedType=b.dataset.txType;$$('[data-tx-type]').forEach(x=>x.classList.toggle('active',x===b));$('#toAccountGroup').style.display=selectedType==='transfer'?'grid':'none';$('#categoryGroup').style.display=selectedType==='transfer'?'none':'grid';if(selectedType!=='transfer')$('#txCategory').innerHTML=categoryOptions(selectedType==='income'?'income':'expense','')});
-        $('#txDate').onchange=e=>$('#dateHelp').textContent=`${formatFaDate(e.target.value)} • ${formatGregorian(e.target.value)}`;
+        $('#txDate').onchange=e=>refreshJalaliDateField('txDate');
         $('[data-close-modal]').onclick=closeModal;
         $('#txForm').onsubmit=e=>{e.preventDefault();const amount=inputToToman($('#txAmount').value);const accountId=$('#txAccount').value,toAccountId=$('#txToAccount').value;if(amount<=0)return toast('مبلغ نامعتبر','مبلغ باید بزرگ‌تر از صفر باشد.','warning');if(selectedType==='transfer'&&accountId===toAccountId)return toast('حساب‌های یکسان','حساب مبدا و مقصد باید متفاوت باشند.','warning');const item={id:id||uid('tx'),type:selectedType,amount,accountId,toAccountId:selectedType==='transfer'?toAccountId:null,categoryId:selectedType==='transfer'?null:$('#txCategory').value,note:$('#txNote').value.trim(),date:$('#txDate').value,createdAt:old?.createdAt||new Date().toISOString(),updatedAt:new Date().toISOString()};if(id){pushUndo('ویرایش تراکنش',()=>{state.transactions=state.transactions.map(x=>x.id===id?old:x);saveState()});state.transactions=state.transactions.map(x=>x.id===id?item:x)}else state.transactions.push(item);saveState();closeModal();toast(id?'تراکنش ویرایش شد':'تراکنش ثبت شد',`${typeLabel(selectedType)} به مبلغ ${money(amount)} ذخیره شد.`,'success')};
       });
@@ -1661,7 +1882,7 @@
     function openGoalModal(id=null){
       const old=state.goals.find(g=>g.id===id);
       const g=old||{title:'',target:0,current:0,dueDate:'',color:'#8b5cf6',icon:'target'};
-      openModal(id?'ویرایش هدف':'هدف مالی جدید',`<form id="goalForm"><div class="form-grid"><div class="form-group full"><label>عنوان هدف</label><input class="field" id="goalTitle" value="${esc(g.title)}" placeholder="مثلاً سفر تابستانی" required></div><div class="form-group"><label>مبلغ هدف (${currencyLabel()})</label><input class="field" id="goalTarget" inputmode="decimal" value="${g.target?formatNumber(tomanToInput(g.target)):''}" required></div><div class="form-group"><label>پس‌انداز فعلی (${currencyLabel()})</label><input class="field" id="goalCurrent" inputmode="decimal" value="${formatNumber(tomanToInput(g.current))}"></div><div class="form-group"><label>تاریخ هدف</label><input class="field" id="goalDate" type="date" value="${g.dueDate||''}"></div><div class="form-group full"><label>آیکن هدف</label>${symbolPicker('goalIcon',g.icon,'goal')}</div><div class="form-group full"><label>رنگ</label>${colorField(g.color)}</div></div><div class="form-actions"><button type="button" class="btn" data-close-modal>انصراف</button><button class="btn btn-primary">ذخیره هدف</button></div></form>`,()=>{
+      openModal(id?'ویرایش هدف':'هدف مالی جدید',`<form id="goalForm"><div class="form-grid"><div class="form-group full"><label>عنوان هدف</label><input class="field" id="goalTitle" value="${esc(g.title)}" placeholder="مثلاً سفر تابستانی" required></div><div class="form-group"><label>مبلغ هدف (${currencyLabel()})</label><input class="field" id="goalTarget" inputmode="decimal" value="${g.target?formatNumber(tomanToInput(g.target)):''}" required></div><div class="form-group"><label>پس‌انداز فعلی (${currencyLabel()})</label><input class="field" id="goalCurrent" inputmode="decimal" value="${formatNumber(tomanToInput(g.current))}"></div><div class="form-group"><label>تاریخ هدف (شمسی)</label>${jalaliDateField('goalDate',g.dueDate||'',{required:false,placeholder:'انتخاب تاریخ هدف'})}</div><div class="form-group full"><label>آیکن هدف</label>${symbolPicker('goalIcon',g.icon,'goal')}</div><div class="form-group full"><label>رنگ</label>${colorField(g.color)}</div></div><div class="form-actions"><button type="button" class="btn" data-close-modal>انصراف</button><button class="btn btn-primary">ذخیره هدف</button></div></form>`,()=>{
         bindColorPicker();bindSymbolPicker();$('[data-close-modal]').onclick=closeModal;
         $('#goalForm').onsubmit=e=>{e.preventDefault();const target=inputToToman($('#goalTarget').value),current=inputToToman($('#goalCurrent').value);if(target<=0)return toast('مبلغ نامعتبر','مبلغ هدف باید بزرگ‌تر از صفر باشد.','warning');const item={id:id||uid('goal'),title:$('#goalTitle').value.trim(),target,current:Math.max(0,current),dueDate:$('#goalDate').value,color:$('#selectedColor').value,icon:$('#goalIcon').value||'target',createdAt:old?.createdAt||new Date().toISOString()};if(id){pushUndo('ویرایش هدف',()=>{state.goals=state.goals.map(x=>x.id===id?old:x);saveState()});state.goals=state.goals.map(x=>x.id===id?item:x)}else state.goals.push(item);saveState();closeModal();toast('هدف ذخیره شد',item.title,'success')};
       });
@@ -1669,7 +1890,7 @@
 
     function openContributionModal(id){ const g=state.goals.find(x=>x.id===id);if(!g)return;openModal('افزایش پس‌انداز هدف',`<form id="contributionForm"><div class="form-group"><label>مبلغ افزایش (${currencyLabel()})</label><input class="field" id="contributionAmount" inputmode="decimal" placeholder="۰" required><div class="help">پیشرفت فعلی: ${money(g.current)} از ${money(g.target)}</div></div><div class="form-actions"><button type="button" class="btn" data-close-modal>انصراف</button><button class="btn btn-primary">ثبت افزایش</button></div></form>`,()=>{$('[data-close-modal]').onclick=closeModal;$('#contributionForm').onsubmit=e=>{e.preventDefault();const amount=inputToToman($('#contributionAmount').value);if(amount<=0)return;const old={...g};g.current+=amount;pushUndo('افزایش هدف',()=>{Object.assign(g,old);saveState()});saveState();closeModal();toast('پس‌انداز افزایش یافت',`${money(amount)} به هدف «${g.title}» افزوده شد.`,'success')}}); }
 
-    function openInstallmentModal(id=null){ const old=state.installments.find(i=>i.id===id);const i=old||{title:'',installmentAmount:0,count:12,paidCount:0,accountId:state.accounts[0]?.id||'',categoryId:state.categories.expense[0]?.id||'',startDate:todayISO(),dayOfMonth:new Date().getDate()};if(!state.accounts.length)return toast('حسابی وجود ندارد','ابتدا یک حساب ایجاد کنید.','warning');openModal(id?'ویرایش قرارداد قسطی':'قرارداد قسطی جدید',`<form id="installmentForm"><div class="form-grid"><div class="form-group full"><label>عنوان</label><input class="field" id="instTitle" value="${esc(i.title)}" placeholder="مثلاً خرید لپ‌تاپ" required></div><div class="form-group"><label>مبلغ هر قسط (${currencyLabel()})</label><input class="field" id="instAmount" inputmode="decimal" value="${i.installmentAmount?formatNumber(tomanToInput(i.installmentAmount)):''}" required></div><div class="form-group"><label>تعداد اقساط</label><input class="field" id="instCount" type="number" min="1" max="360" value="${i.count}" required></div><div class="form-group"><label>اقساط پرداخت‌شده</label><input class="field" id="instPaid" type="number" min="0" max="${i.count}" value="${i.paidCount}"></div><div class="form-group"><label>روز سررسید ماه</label><input class="field" id="instDay" type="number" min="1" max="31" value="${i.dayOfMonth}"></div><div class="form-group"><label>تاریخ شروع</label><input class="field" id="instStart" type="date" value="${i.startDate}" required></div><div class="form-group"><label>حساب پرداخت</label><select class="select" id="instAccount">${accountOptions(i.accountId)}</select></div><div class="form-group"><label>دسته هزینه</label><select class="select" id="instCategory">${categoryOptions('expense',i.categoryId)}</select></div></div><div class="form-actions"><button type="button" class="btn" data-close-modal>انصراف</button><button class="btn btn-primary">ذخیره</button></div></form>`,()=>{$('[data-close-modal]').onclick=closeModal;$('#instCount').oninput=e=>$('#instPaid').max=e.target.value;$('#installmentForm').onsubmit=e=>{e.preventDefault();const count=num($('#instCount').value),paid=clamp(num($('#instPaid').value),0,count),amount=inputToToman($('#instAmount').value);if(amount<=0||count<1)return toast('مقادیر نامعتبر','مبلغ و تعداد اقساط را بررسی کنید.','warning');const item={id:id||uid('inst'),title:$('#instTitle').value.trim(),installmentAmount:amount,count,paidCount:paid,accountId:$('#instAccount').value,categoryId:$('#instCategory').value,startDate:$('#instStart').value,dayOfMonth:clamp(num($('#instDay').value),1,31),createdAt:old?.createdAt||new Date().toISOString()};if(id){pushUndo('ویرایش اقساط',()=>{state.installments=state.installments.map(x=>x.id===id?old:x);saveState()});state.installments=state.installments.map(x=>x.id===id?item:x)}else state.installments.push(item);saveState();closeModal();toast('اقساط ذخیره شد',item.title,'success')}}); }
+    function openInstallmentModal(id=null){ const old=state.installments.find(i=>i.id===id);const i=old||{title:'',installmentAmount:0,count:12,paidCount:0,accountId:state.accounts[0]?.id||'',categoryId:state.categories.expense[0]?.id||'',startDate:todayISO(),dayOfMonth:persianParts(new Date()).day};if(!state.accounts.length)return toast('حسابی وجود ندارد','ابتدا یک حساب ایجاد کنید.','warning');openModal(id?'ویرایش قرارداد قسطی':'قرارداد قسطی جدید',`<form id="installmentForm"><div class="form-grid"><div class="form-group full"><label>عنوان</label><input class="field" id="instTitle" value="${esc(i.title)}" placeholder="مثلاً خرید لپ‌تاپ" required></div><div class="form-group"><label>مبلغ هر قسط (${currencyLabel()})</label><input class="field" id="instAmount" inputmode="decimal" value="${i.installmentAmount?formatNumber(tomanToInput(i.installmentAmount)):''}" required></div><div class="form-group"><label>تعداد اقساط</label><input class="field" id="instCount" type="number" min="1" max="360" value="${i.count}" required></div><div class="form-group"><label>اقساط پرداخت‌شده</label><input class="field" id="instPaid" type="number" min="0" max="${i.count}" value="${i.paidCount}"></div><div class="form-group"><label>روز سررسید ماه شمسی</label><input class="field" id="instDay" type="number" min="1" max="31" value="${i.dayOfMonth}"></div><div class="form-group"><label>تاریخ شروع (شمسی)</label>${jalaliDateField('instStart',i.startDate)}</div><div class="form-group"><label>حساب پرداخت</label><select class="select" id="instAccount">${accountOptions(i.accountId)}</select></div><div class="form-group"><label>دسته هزینه</label><select class="select" id="instCategory">${categoryOptions('expense',i.categoryId)}</select></div></div><div class="form-actions"><button type="button" class="btn" data-close-modal>انصراف</button><button class="btn btn-primary">ذخیره</button></div></form>`,()=>{$('[data-close-modal]').onclick=closeModal;$('#instCount').oninput=e=>$('#instPaid').max=e.target.value;$('#installmentForm').onsubmit=e=>{e.preventDefault();const count=num($('#instCount').value),paid=clamp(num($('#instPaid').value),0,count),amount=inputToToman($('#instAmount').value);if(amount<=0||count<1)return toast('مقادیر نامعتبر','مبلغ و تعداد اقساط را بررسی کنید.','warning');const item={id:id||uid('inst'),title:$('#instTitle').value.trim(),installmentAmount:amount,count,paidCount:paid,accountId:$('#instAccount').value,categoryId:$('#instCategory').value,startDate:$('#instStart').value,dayOfMonth:clamp(num($('#instDay').value),1,31),createdAt:old?.createdAt||new Date().toISOString()};if(id){pushUndo('ویرایش اقساط',()=>{state.installments=state.installments.map(x=>x.id===id?old:x);saveState()});state.installments=state.installments.map(x=>x.id===id?item:x)}else state.installments.push(item);saveState();closeModal();toast('اقساط ذخیره شد',item.title,'success')}}); }
 
     function payInstallment(id){ const i=state.installments.find(x=>x.id===id);const next=getNextInstallment(i);if(!i||!next)return;const oldPaid=i.paidCount;const tx={id:uid('tx'),type:'expense',amount:i.installmentAmount,accountId:i.accountId,toAccountId:null,categoryId:i.categoryId,note:`قسط ${toFa(next.index)} از ${toFa(i.count)} — ${i.title}`,date:todayISO(),createdAt:new Date().toISOString(),installmentId:i.id};i.paidCount++;state.transactions.push(tx);pushUndo('پرداخت قسط',()=>{i.paidCount=oldPaid;state.transactions=state.transactions.filter(t=>t.id!==tx.id);saveState()});saveState();toast('پرداخت ثبت شد',`${money(i.installmentAmount)} از حساب ${accountById(i.accountId)?.name||''} کسر شد.`,'success'); }
 
@@ -1748,7 +1969,7 @@
     /* ========================================================
        لایهٔ حرفه‌ای: PWA، واردسازی، بینش‌ها و تعامل‌های لمسی
        ======================================================== */
-    const APP_RELEASE = '6.1.0';
+    const APP_RELEASE = '7.1.0';
     const ACCENTS = {
       indigo:{main:'#5b5cf0',second:'#8b5cf6',rgb:'91,92,240'},
       blue:{main:'#1677ff',second:'#56a8ff',rgb:'22,119,255'},
@@ -1787,7 +2008,9 @@
         return next;
       });
       if(!Array.isArray(state.splits)){state.splits=[];changed=true}
+      const splitsNeedMigration=state.splits.some(b=>!Array.isArray(b.expenses)||!Array.isArray(b.settlements));
       state.splits=state.splits.map(b=>migrateSplitBill(b));
+      if(splitsNeedMigration)changed=true;
       if(!navItems.some(x=>x[0]==='splits')) navItems.splice(2,0,['splits','دنگ‌ها','تقسیم هزینه و تسویه',icons.split]);
       if(!navItems.some(x=>x[0]==='calendar')) navItems.splice(8,0,['calendar','تقویم','مرور روزانه',icons.calendar]);
       state.version=SCHEMA_VERSION;
@@ -1886,10 +2109,10 @@
       if(type==='transfer'&&!id&&state.accounts.length<2){toast('حساب مقصد لازم است','برای انتقال وجه حداقل دو حساب ایجاد کنید.','warning');navigate('accounts');return}
       if(!state.accounts.length){toast('ابتدا حساب بسازید','برای ثبت تراکنش حداقل یک حساب لازم است.','warning');navigate('accounts');return}
       const old=state.transactions.find(t=>t.id===id);const t=old||{type,amount:'',accountId:state.accounts[0].id,toAccountId:state.accounts[1]?.id||state.accounts[0].id,categoryId:state.categories[type==='income'?'income':'expense'][0]?.id||'',description:'',notes:'',date:todayISO(),enteredCurrency:state.settings.currency};
-      openModal(id?'ویرایش تراکنش':'تراکنش جدید',`<form id="txForm"><div class="segmented" style="margin-bottom:16px">${['expense','income','transfer'].map(x=>`<button type="button" class="segment ${t.type===x?'active':''}" data-tx-type="${x}">${typeLabel(x)}</button>`).join('')}</div><div class="form-grid"><div class="form-group"><label>مبلغ</label><input class="field" id="txAmount" inputmode="decimal" value="${old?formatNumber(amountForCurrency(t.amount,t.enteredCurrency||state.settings.currency)):''}" placeholder="۰" required></div><div class="form-group"><label>واحد مبلغ</label><select class="select" id="txCurrency"><option value="toman" ${(t.enteredCurrency||state.settings.currency)==='toman'?'selected':''}>تومان</option><option value="rial" ${(t.enteredCurrency||state.settings.currency)==='rial'?'selected':''}>ریال</option></select></div><div class="form-group"><label>از حساب</label><select class="select" id="txAccount" required>${accountOptions(t.accountId)}</select></div><div class="form-group" id="toAccountGroup" style="display:${t.type==='transfer'?'grid':'none'}"><label>به حساب</label><select class="select" id="txToAccount">${accountOptions(t.toAccountId)}</select></div><div class="form-group" id="categoryGroup" style="display:${t.type==='transfer'?'none':'grid'}"><label>دسته‌بندی</label><select class="select" id="txCategory">${categoryOptions(t.type==='income'?'income':'expense',t.categoryId)}</select></div><div class="form-group"><label>تاریخ</label><input class="field" type="date" id="txDate" value="${t.date}" required>${dateHelp(t.date)}</div><div class="form-group full"><label>شرح</label><input class="field" id="txDescription" value="${esc(t.description||t.note||'')}" placeholder="مثلاً خرید هفتگی یا حقوق مرداد" required></div><div class="form-group full"><label>یادداشت اختیاری</label><textarea class="textarea" id="txNotes" placeholder="جزئیات بیشتر، شماره پیگیری یا توضیحات…">${esc(t.notes||'')}</textarea></div></div><div class="form-actions"><button type="button" class="btn" data-close-modal>انصراف</button><button class="btn btn-primary" type="submit">${id?'ذخیره تغییرات':'ثبت تراکنش'}</button></div></form>`,()=>{
+      openModal(id?'ویرایش تراکنش':'تراکنش جدید',`<form id="txForm"><div class="segmented" style="margin-bottom:16px">${['expense','income','transfer'].map(x=>`<button type="button" class="segment ${t.type===x?'active':''}" data-tx-type="${x}">${typeLabel(x)}</button>`).join('')}</div><div class="form-grid"><div class="form-group"><label>مبلغ</label><input class="field" id="txAmount" inputmode="decimal" value="${old?formatNumber(amountForCurrency(t.amount,t.enteredCurrency||state.settings.currency)):''}" placeholder="۰" required></div><div class="form-group"><label>واحد مبلغ</label><select class="select" id="txCurrency"><option value="toman" ${(t.enteredCurrency||state.settings.currency)==='toman'?'selected':''}>تومان</option><option value="rial" ${(t.enteredCurrency||state.settings.currency)==='rial'?'selected':''}>ریال</option></select></div><div class="form-group"><label>از حساب</label><select class="select" id="txAccount" required>${accountOptions(t.accountId)}</select></div><div class="form-group" id="toAccountGroup" style="display:${t.type==='transfer'?'grid':'none'}"><label>به حساب</label><select class="select" id="txToAccount">${accountOptions(t.toAccountId)}</select></div><div class="form-group" id="categoryGroup" style="display:${t.type==='transfer'?'none':'grid'}"><label>دسته‌بندی</label><select class="select" id="txCategory">${categoryOptions(t.type==='income'?'income':'expense',t.categoryId)}</select></div><div class="form-group"><label>تاریخ شمسی</label>${jalaliDateField('txDate',t.date)}</div><div class="form-group full"><label>شرح</label><input class="field" id="txDescription" value="${esc(t.description||t.note||'')}" placeholder="مثلاً خرید هفتگی یا حقوق مرداد" required></div><div class="form-group full"><label>یادداشت اختیاری</label><textarea class="textarea" id="txNotes" placeholder="جزئیات بیشتر، شماره پیگیری یا توضیحات…">${esc(t.notes||'')}</textarea></div></div><div class="form-actions"><button type="button" class="btn" data-close-modal>انصراف</button><button class="btn btn-primary" type="submit">${id?'ذخیره تغییرات':'ثبت تراکنش'}</button></div></form>`,()=>{
         let selectedType=t.type;
         $$('[data-tx-type]').forEach(b=>b.onclick=()=>{if(b.dataset.txType==='transfer'&&state.accounts.length<2)return toast('حساب مقصد لازم است','حداقل دو حساب ایجاد کنید.','warning');selectedType=b.dataset.txType;$$('[data-tx-type]').forEach(x=>x.classList.toggle('active',x===b));$('#toAccountGroup').style.display=selectedType==='transfer'?'grid':'none';$('#categoryGroup').style.display=selectedType==='transfer'?'none':'grid';if(selectedType!=='transfer')$('#txCategory').innerHTML=categoryOptions(selectedType==='income'?'income':'expense',t.categoryId)});
-        $('#txDate').onchange=e=>$('#dateHelp').textContent=`${formatFaDate(e.target.value)} • ${formatGregorian(e.target.value)}`;$('[data-close-modal]').onclick=closeModal;
+        $('#txDate').onchange=e=>refreshJalaliDateField('txDate');$('[data-close-modal]').onclick=closeModal;
         $('#txForm').onsubmit=e=>{e.preventDefault();const enteredCurrency=$('#txCurrency').value,amount=amountFromCurrency($('#txAmount').value,enteredCurrency),accountId=$('#txAccount').value,toAccountId=$('#txToAccount').value,description=$('#txDescription').value.trim();if(amount<=0)return toast('مبلغ نامعتبر','مبلغ باید بزرگ‌تر از صفر باشد.','warning');if(!description)return toast('شرح لازم است','برای پیدا کردن آسان تراکنش، یک شرح کوتاه بنویسید.','warning');if(selectedType==='transfer'&&accountId===toAccountId)return toast('حساب‌های یکسان','حساب مبدأ و مقصد باید متفاوت باشند.','warning');const item={id:id||uid('tx'),type:selectedType,amount,enteredCurrency,accountId,toAccountId:selectedType==='transfer'?toAccountId:null,categoryId:selectedType==='transfer'?null:$('#txCategory').value,description,notes:$('#txNotes').value.trim(),note:description,date:$('#txDate').value,createdAt:old?.createdAt||new Date().toISOString(),updatedAt:new Date().toISOString()};if(id){pushUndo('ویرایش تراکنش',()=>{state.transactions=state.transactions.map(x=>x.id===id?old:x);saveState()});state.transactions=state.transactions.map(x=>x.id===id?item:x)}else state.transactions.push(item);saveState();closeModal();toast(id?'تراکنش ویرایش شد':'تراکنش ثبت شد',`${typeLabel(selectedType)} به مبلغ ${money(amount)} ذخیره شد.`,'success')};
       });
     };
@@ -1925,7 +2148,7 @@
 
     function setupPWA(){
       const standalone=matchMedia('(display-mode: standalone)').matches||navigator.standalone===true;document.body.classList.toggle('is-standalone',standalone);
-      const launchParams=new URLSearchParams(location.search);const launchView=launchParams.get('view'),launchAction=launchParams.get('action');if(launchView&&navItems.some(x=>x[0]===launchView))currentView=launchView;if(['income','expense','transfer'].includes(launchAction))setTimeout(()=>openTransactionModal(launchAction),700);if(launchView||launchAction)history.replaceState({},'',location.pathname);
+      const launchParams=new URLSearchParams(location.search);const launchView=launchParams.get('view'),launchAction=launchParams.get('action');if(launchView&&navItems.some(x=>x[0]===launchView))currentView=launchView;if(['income','expense','transfer'].includes(launchAction))setTimeout(()=>openTransactionModal(launchAction),700);if(launchAction==='split')setTimeout(()=>openSplitModal(),700);if(launchAction==='trip')setTimeout(()=>openSplitGroupModal(),700);if(launchView||launchAction)history.replaceState({},'',location.pathname);
       if('serviceWorker'in navigator&&location.protocol!=='file:')navigator.serviceWorker.register('./service-worker.js').catch(err=>console.warn('ثبت سرویس‌ورکر انجام نشد',err));
       window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredInstallPrompt=e;if(!state.settings.installHintDismissed&&!standalone)$('#installBanner')?.classList.add('show')});
       window.addEventListener('appinstalled',()=>{$('#installBanner')?.classList.remove('show');deferredInstallPrompt=null;toast('برنامه نصب شد','دارایی من از صفحهٔ اصلی در دسترس است.','success')});
@@ -1962,40 +2185,20 @@
 
 
     /* ========================================================
-       دنگ: تقسیم هزینهٔ مساوی، درصدی، سهمی و مبلغ دقیق
+       دنگ و سفر: چند هزینه، چند پرداخت‌کننده و تسویهٔ کم‌انتقال
        ======================================================== */
     const SPLIT_METHODS={
-      equal:{label:'مساوی',hint:'تقسیم برابر میان همه',icon:icons.users},
-      percent:{label:'درصدی',hint:'درصد هر نفر از کل',icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="7" cy="7" r="2.2"/><circle cx="17" cy="17" r="2.2"/><path d="m6 19 12-14"/></svg>'},
-      shares:{label:'تعداد سهم',hint:'مثلاً ۱، ۲ یا ۳ سهم',icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 6h16M4 12h16M4 18h16"/><path d="M8 4v4M15 10v4M11 16v4"/></svg>'},
-      exact:{label:'مبلغ دستی',hint:'مبلغ مشخص برای هر نفر',icon:icons.calculator}
+      equal:{label:'مساوی',hint:'تقسیم برابر میان افراد انتخاب‌شده',icon:icons.users},
+      percent:{label:'درصدی',hint:'درصد هر نفر از هزینه',icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="7" cy="7" r="2.2"/><circle cx="17" cy="17" r="2.2"/><path d="m6 19 12-14"/></svg>'},
+      shares:{label:'تعداد سهم',hint:'تقسیم وزنی با تعداد سهم',icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 6h16M4 12h16M4 18h16"/><path d="M8 4v4M15 10v4M11 16v4"/></svg>'},
+      exact:{label:'مبلغ دستی',hint:'مبلغ دقیق هر نفر',icon:icons.calculator}
     };
-    let splitQuery='';
+    let splitQuery='',activeSplitDraft=null,activeGroupDraft=null,activeExpenseDraft=null;
 
     function splitMethodLabel(method){return SPLIT_METHODS[method]?.label||SPLIT_METHODS.equal.label}
     function splitInitials(name){const parts=String(name||'؟').trim().split(/\s+/).filter(Boolean);return (parts[0]?.[0]||'؟')+(parts.length>1?(parts.at(-1)?.[0]||''):'')}
-    function migrateSplitBill(b){
-      const bill={...b};
-      bill.id ||= uid('split'); bill.title ||= 'دنگ بدون عنوان'; bill.total=Math.max(0,num(bill.total)); bill.enteredCurrency=bill.enteredCurrency==='rial'?'rial':'toman';
-      bill.method=SPLIT_METHODS[bill.method]?bill.method:'equal'; bill.date=bill.date||todayISO(); bill.notes=bill.notes||'';
-      bill.participants=Array.isArray(bill.participants)?bill.participants:[];
-      bill.participants=bill.participants.map((p,i)=>({id:p.id||uid('person'),name:p.name||`نفر ${toFa(i+1)}`,isMe:p.isMe===true||(!bill.participants.some(x=>x.isMe)&&i===0),value:Number.isFinite(Number(p.value))?Number(p.value):1,amount:Math.max(0,num(p.amount)),settled:p.settled===true}));
-      if(!bill.participants.length)bill.participants=[{id:uid('person'),name:'من',isMe:true,value:1,amount:bill.total,settled:true}];
-      if(!bill.participants.some(p=>p.isMe))bill.participants[0].isMe=true;
-      bill.payerId=bill.participants.some(p=>p.id===bill.payerId)?bill.payerId:bill.participants[0].id;
-      bill.participants.forEach(p=>{if(p.id===bill.payerId)p.settled=true});
-      bill.createdAt ||= new Date().toISOString(); bill.updatedAt ||= bill.createdAt;
-      return bill;
-    }
-    function splitPayer(b){return b.participants.find(p=>p.id===b.payerId)||b.participants[0]}
-    function splitMe(b){return b.participants.find(p=>p.isMe)||b.participants[0]}
-    function splitOpenCount(b){return b.participants.filter(p=>p.id!==b.payerId&&!p.settled).length}
-    function splitPosition(b){
-      const payer=splitPayer(b),me=splitMe(b);
-      if(!payer||!me)return{receivable:0,payable:0,label:'بدون وضعیت',amount:0};
-      if(payer.isMe){const receivable=b.participants.filter(p=>p.id!==payer.id&&!p.settled).reduce((s,p)=>s+p.amount,0);return{receivable,payable:0,label:receivable?'باید بگیری':'تسویه شده',amount:receivable}}
-      const payable=!me.settled?me.amount:0;return{receivable:0,payable,label:payable?'سهم شما':'تسویه شده',amount:payable};
-    }
+    function currencyLabelFor(c){return c==='rial'?'ریال':'تومان'}
+    function formatDecimal(value,max=2){return Number(value||0).toLocaleString('fa-IR',{maximumFractionDigits:max})}
     function allocateByWeights(total,weights){
       total=Math.max(0,Math.round(total));const safe=weights.map(x=>Math.max(0,Number(x)||0)),sum=safe.reduce((s,x)=>s+x,0);
       if(!sum)return safe.map(()=>0);
@@ -2004,88 +2207,159 @@
       return base;
     }
     function computeSplitAmounts(draft,{strict=false}={}){
-      const total=Math.max(0,Math.round(draft.total||0)),people=draft.participants||[];let amounts=[],valid=true,message='';
-      if(!people.length)return{amounts:[],sum:0,remaining:total,valid:false,message:'حداقل دو نفر لازم است'};
+      const total=Math.max(0,Math.round(draft.total||draft.amount||0)),people=(draft.participants||[]).filter(p=>p.included!==false);let amounts=[],valid=true,message='';
+      if(!people.length)return{amounts:[],people:[],sum:0,remaining:total,valid:false,message:'حداقل یک نفر باید در هزینه باشد'};
       if(draft.method==='equal')amounts=allocateByWeights(total,people.map(()=>1));
       if(draft.method==='percent'){
-        const vals=people.map(p=>Math.max(0,num(p.value))),sum=vals.reduce((s,x)=>s+x,0);valid=Math.abs(sum-100)<=.01;message=valid?'مجموع درصدها دقیقاً ۱۰۰٪ است':`مجموع درصدها ${formatDecimal(sum)}٪ است`;
-        amounts=allocateByWeights(total,vals);
+        const vals=people.map(p=>Math.max(0,num(p.value))),sum=vals.reduce((s,x)=>s+x,0);valid=Math.abs(sum-100)<=.01;message=valid?'مجموع درصدها دقیقاً ۱۰۰٪ است':`مجموع درصدها ${formatDecimal(sum)}٪ است`;amounts=allocateByWeights(total,vals);
       }
       if(draft.method==='shares'){
-        const vals=people.map(p=>Math.max(0,num(p.value))),sum=vals.reduce((s,x)=>s+x,0);valid=sum>0;message=valid?`${formatNumber(sum)} سهم میان افراد توزیع شده است`:'حداقل یک سهم لازم است';
-        amounts=allocateByWeights(total,vals);
+        const vals=people.map(p=>Math.max(0,num(p.value))),sum=vals.reduce((s,x)=>s+x,0);valid=sum>0;message=valid?`${formatNumber(sum)} سهم میان افراد توزیع شده است`:'حداقل یک سهم لازم است';amounts=allocateByWeights(total,vals);
       }
       if(draft.method==='exact'){
-        amounts=people.map(p=>Math.max(0,Math.round(num(p.exactToman??p.amount??0))));const sum=amounts.reduce((s,x)=>s+x,0);valid=Math.abs(sum-total)<=1;message=valid?'جمع مبالغ با کل هزینه برابر است':`${money(Math.abs(total-sum))} ${sum<total?'باقی مانده':'بیشتر وارد شده'}`;
-        if(valid&&amounts.length)amounts[amounts.length-1]+=total-sum;
+        amounts=people.map(p=>Math.max(0,Math.round(num(p.exactToman??p.amount??0))));const sum=amounts.reduce((s,x)=>s+x,0);valid=Math.abs(sum-total)<=1;message=valid?'جمع مبالغ با کل هزینه برابر است':`${money(Math.abs(total-sum))} ${sum<total?'باقی مانده':'بیشتر وارد شده'}`;if(valid&&amounts.length)amounts[amounts.length-1]+=total-sum;
       }
-      const sum=amounts.reduce((s,x)=>s+x,0);if(strict&&total<=0){valid=false;message='مبلغ کل باید بزرگ‌تر از صفر باشد'}
-      return{amounts,sum,remaining:total-sum,valid,message};
+      const sum=amounts.reduce((s,x)=>s+x,0);if(strict&&total<=0){valid=false;message='مبلغ باید بزرگ‌تر از صفر باشد'}
+      return{amounts,people,sum,remaining:total-sum,valid,message};
     }
+    function migrateSplitExpense(exp,bill){
+      const e={...exp};e.id||=uid('spx');e.title=e.title||bill.title||'هزینه';e.amount=Math.max(0,Math.round(num(e.amount??e.total)));e.date=e.date||bill.date||todayISO();e.method=['equal','percent','shares','exact'].includes(e.method)?e.method:'equal';
+      e.payerId=bill.participants.some(p=>p.id===e.payerId)?e.payerId:(bill.payerId||bill.participants[0]?.id||'');
+      let allocations=Array.isArray(e.allocations)?e.allocations:[];
+      if(!allocations.length&&Array.isArray(exp.participants))allocations=exp.participants.map(p=>({personId:p.id,value:p.value,amount:p.amount,included:true}));
+      if(!allocations.length&&Array.isArray(bill.participants))allocations=bill.participants.map(p=>({personId:p.id,value:p.value??1,amount:p.amount||0,included:true}));
+      e.allocations=allocations.filter(a=>bill.participants.some(p=>p.id===(a.personId||a.id))).map(a=>({personId:a.personId||a.id,value:Number.isFinite(Number(a.value))?Number(a.value):1,amount:Math.max(0,Math.round(num(a.amount))),included:a.included!==false}));
+      if(!e.allocations.length)e.allocations=bill.participants.map(p=>({personId:p.id,value:1,amount:0,included:true}));
+      const included=e.allocations.filter(a=>a.included!==false),stored=included.reduce((s,a)=>s+a.amount,0);
+      if(Math.abs(stored-e.amount)>1){const draft={total:e.amount,method:e.method,participants:included.map(a=>({id:a.personId,value:a.value,exactToman:a.amount,included:true}))},r=computeSplitAmounts(draft);included.forEach((a,i)=>a.amount=r.amounts[i]||0)}
+      e.createdAt||=new Date().toISOString();e.updatedAt||=e.createdAt;return e;
+    }
+    function migrateSplitBill(b){
+      const bill={...b};bill.id||=uid('split');bill.title||='دنگ بدون عنوان';bill.enteredCurrency=bill.enteredCurrency==='rial'?'rial':'toman';bill.date=bill.date||todayISO();bill.notes=bill.notes||'';
+      const sourcePeople=Array.isArray(bill.participants)?bill.participants:[];bill.participants=sourcePeople.map((p,i)=>({id:p.id||uid('person'),name:p.name||`نفر ${toFa(i+1)}`,isMe:p.isMe===true||(!sourcePeople.some(x=>x.isMe)&&i===0)}));
+      if(!bill.participants.length)bill.participants=[{id:uid('person'),name:'من',isMe:true},{id:uid('person'),name:'نفر دوم',isMe:false}];if(!bill.participants.some(p=>p.isMe))bill.participants[0].isMe=true;
+      const legacyPayer=bill.participants.some(p=>p.id===bill.payerId)?bill.payerId:bill.participants[0].id;
+      if(!Array.isArray(bill.expenses)||!bill.expenses.length){
+        if(Math.max(0,num(bill.total))>0)bill.expenses=[{id:uid('spx'),title:bill.title,amount:Math.max(0,Math.round(num(bill.total))),date:bill.date,payerId:legacyPayer,method:['equal','percent','shares','exact'].includes(bill.method)?bill.method:'equal',allocations:sourcePeople.map((p,i)=>({personId:bill.participants[i]?.id,value:p.value??1,amount:Math.max(0,Math.round(num(p.amount))),included:true})),createdAt:bill.createdAt||new Date().toISOString()}];else bill.expenses=[];
+      }
+      bill.expenses=bill.expenses.map(e=>migrateSplitExpense(e,bill));
+      bill.settlements=Array.isArray(bill.settlements)?bill.settlements.map(x=>({id:x.id||uid('settle'),fromId:x.fromId,toId:x.toId,amount:Math.max(0,Math.round(num(x.amount))),date:x.date||todayISO(),createdAt:x.createdAt||new Date().toISOString()})).filter(x=>x.amount>0&&bill.participants.some(p=>p.id===x.fromId)&&bill.participants.some(p=>p.id===x.toId)):[];
+      if(!bill.settlements.length&&sourcePeople.some(p=>p.settled)&&bill.expenses.length===1){sourcePeople.forEach((p,i)=>{const person=bill.participants[i],amount=Math.max(0,Math.round(num(p.amount)));if(p.settled&&person&&person.id!==legacyPayer&&amount>0)bill.settlements.push({id:uid('settle'),fromId:person.id,toId:legacyPayer,amount,date:bill.date,createdAt:new Date().toISOString()})})}
+      bill.total=bill.expenses.reduce((s,e)=>s+e.amount,0);bill.payerId=bill.expenses[0]?.payerId||legacyPayer;bill.method=bill.expenses.length===1?bill.expenses[0].method:'group';bill.kind=bill.expenses.length>1?'group':(bill.kind||'single');bill.createdAt||=new Date().toISOString();bill.updatedAt||=bill.createdAt;return bill;
+    }
+    function splitTotal(b){return (b.expenses||[]).reduce((s,e)=>s+Math.max(0,num(e.amount)),0)}
+    function splitMe(b){return b.participants.find(p=>p.isMe)||b.participants[0]}
+    function splitLedger(b,{includeSettlements=true}={}){
+      const map=new Map(b.participants.map(p=>[p.id,{...p,paid:0,owed:0,balance:0}]));
+      (b.expenses||[]).forEach(e=>{const payer=map.get(e.payerId);if(payer)payer.paid+=e.amount;(e.allocations||[]).filter(a=>a.included!==false).forEach(a=>{const p=map.get(a.personId);if(p)p.owed+=a.amount})});
+      map.forEach(p=>p.balance=Math.round(p.paid-p.owed));
+      if(includeSettlements)(b.settlements||[]).forEach(x=>{const from=map.get(x.fromId),to=map.get(x.toId);if(from)from.balance+=x.amount;if(to)to.balance-=x.amount});
+      const rows=[...map.values()],diff=rows.reduce((s,p)=>s+p.balance,0);if(diff&&rows.length)rows.sort((a,b)=>Math.abs(b.balance)-Math.abs(a.balance))[0].balance-=diff;return rows;
+    }
+    function greedySettlementPlan(rows){
+      const debtors=rows.filter(x=>x.balance<0).map(x=>({...x,amount:-x.balance})).sort((a,b)=>b.amount-a.amount),creditors=rows.filter(x=>x.balance>0).map(x=>({...x,amount:x.balance})).sort((a,b)=>b.amount-a.amount),out=[];let i=0,j=0;
+      while(i<debtors.length&&j<creditors.length){const amount=Math.min(debtors[i].amount,creditors[j].amount);if(amount>0)out.push({fromId:debtors[i].id,toId:creditors[j].id,amount});debtors[i].amount-=amount;creditors[j].amount-=amount;if(debtors[i].amount<=0)i++;if(creditors[j].amount<=0)j++}return out;
+    }
+    function minimalSettlementPlan(b){
+      const rows=splitLedger(b).filter(x=>Math.abs(x.balance)>0);if(rows.length<2)return[];const fallback=greedySettlementPlan(rows);if(rows.length>10)return fallback;
+      const nodes=rows.map(x=>({id:x.id,balance:x.balance})).sort((a,b)=>Math.abs(b.balance)-Math.abs(a.balance));let best=fallback,steps=0,maxSteps=90000;
+      function dfs(arr,path){if(++steps>maxSteps)return;if(path.length>=best.length)return;let i=0;while(i<arr.length&&arr[i].balance===0)i++;if(i===arr.length){best=path.map(x=>({...x}));return}const a=arr[i],seen=new Set();for(let j=i+1;j<arr.length;j++){const bb=arr[j].balance;if(!bb||Math.sign(bb)===Math.sign(a.balance)||seen.has(bb))continue;seen.add(bb);const amount=Math.min(Math.abs(a.balance),Math.abs(bb));const oldA=a.balance,oldB=arr[j].balance;let transfer;if(a.balance<0){transfer={fromId:a.id,toId:arr[j].id,amount};a.balance+=amount;arr[j].balance-=amount}else{transfer={fromId:arr[j].id,toId:a.id,amount};a.balance-=amount;arr[j].balance+=amount}path.push(transfer);dfs(arr,path);path.pop();a.balance=oldA;arr[j].balance=oldB;if(Math.abs(oldA)===Math.abs(oldB))break}}
+      dfs(nodes,[]);return best;
+    }
+    function splitOpenCount(b){return minimalSettlementPlan(b).length}
+    function splitPosition(b){const me=splitLedger(b).find(p=>p.isMe);const amount=Math.abs(me?.balance||0);return{receivable:me?.balance>0?amount:0,payable:me?.balance<0?amount:0,label:me?.balance>0?'باید بگیری':me?.balance<0?'باید بدهی':'تسویه شده',amount}}
+    function splitProgressData(b){const initial=splitLedger(b,{includeSettlements:false}),current=splitLedger(b),all=initial.filter(x=>x.balance>0).reduce((s,x)=>s+x.balance,0),remaining=current.filter(x=>x.balance>0).reduce((s,x)=>s+x.balance,0),pct=all?clamp((all-remaining)/all*100,0,100):100;return{all,remaining,pct}}
     function splitOverview(){
-      const open=state.splits.filter(b=>splitOpenCount(b)>0),receivable=state.splits.reduce((s,b)=>s+splitPosition(b).receivable,0),payable=state.splits.reduce((s,b)=>s+splitPosition(b).payable,0),settled=state.splits.filter(b=>splitOpenCount(b)===0).length;
-      return `<div class="split-overview"><section class="split-metric glass"><div class="split-metric-head"><span>دنگ‌های باز</span>${icons.split}</div><strong>${formatNumber(open.length)}</strong></section><section class="split-metric glass"><div class="split-metric-head"><span>باید بگیری</span>${icons.income}</div><strong class="positive">${moneyHTML(receivable,{compact:true,stack:true})}</strong></section><section class="split-metric glass"><div class="split-metric-head"><span>باید بدهی</span>${icons.expense}</div><strong class="negative">${moneyHTML(payable,{compact:true,stack:true})}</strong></section><section class="split-metric glass"><div class="split-metric-head"><span>تسویه‌شده</span>${icons.circleCheck}</div><strong>${settled?formatNumber(settled):'—'}</strong></section></div>`;
+      const open=state.splits.filter(b=>splitOpenCount(b)>0),receivable=state.splits.reduce((s,b)=>s+splitPosition(b).receivable,0),payable=state.splits.reduce((s,b)=>s+splitPosition(b).payable,0),settled=state.splits.filter(b=>splitOpenCount(b)===0&&splitTotal(b)>0).length;
+      return `<div class="split-overview"><section class="split-metric glass"><div class="split-metric-head"><span>گروه‌های باز</span>${icons.split}</div><strong>${formatNumber(open.length)}</strong></section><section class="split-metric glass"><div class="split-metric-head"><span>باید بگیری</span>${icons.income}</div><strong class="positive">${moneyHTML(receivable,{compact:true,stack:true})}</strong></section><section class="split-metric glass"><div class="split-metric-head"><span>باید بدهی</span>${icons.expense}</div><strong class="negative">${moneyHTML(payable,{compact:true,stack:true})}</strong></section><section class="split-metric glass"><div class="split-metric-head"><span>تسویه‌شده</span>${icons.circleCheck}</div><strong>${settled?formatNumber(settled):'—'}</strong></section></div>`;
     }
     function splitCard(b){
-      const payer=splitPayer(b),position=splitPosition(b),open=splitOpenCount(b),settled=b.participants.length-1-open,pct=b.participants.length>1?settled/(b.participants.length-1)*100:100,progressLabel=pct<=0?'شروع نشده':pct>=100?'کامل':`${formatNumber(pct)}٪`;
-      return `<article class="split-card glass"><div class="split-card-head"><div class="split-card-title"><h3>${esc(b.title)}</h3><p>${formatFaDateShort(b.date)} • پرداخت‌کننده: ${esc(payer?.name||'—')}</p></div><span class="split-method-badge">${SPLIT_METHODS[b.method]?.icon||icons.split}${splitMethodLabel(b.method)}</span></div><div class="split-primary"><div class="split-total"><span>مبلغ کل</span><strong>${moneyHTML(b.total,{compact:true})}</strong></div><div class="split-you"><span>${position.label}</span><strong class="${position.receivable?'positive':position.payable?'negative':'muted'}">${position.amount?moneyHTML(position.amount,{compact:true,stack:true}):'همه حساب‌اند'}</strong></div></div><div class="split-people"><div class="avatar-stack">${b.participants.slice(0,5).map(p=>`<span class="person-avatar" title="${esc(p.name)}">${esc(splitInitials(p.name))}</span>`).join('')}${b.participants.length>5?`<span class="person-avatar">+${formatNumber(b.participants.length-5)}</span>`:''}</div><span class="split-member-count">${formatNumber(b.participants.length)} نفر</span></div><div class="split-progress"><div class="meter-head"><span>${formatNumber(settled)} از ${formatNumber(Math.max(0,b.participants.length-1))} سهم تسویه</span><strong>${progressLabel}</strong></div><div class="meter-track"><div class="meter-fill" style="width:${clamp(pct,0,100)}%;--meter-color:${open?'var(--accent)':'var(--success)'}"></div></div></div><div class="split-card-actions"><button class="btn btn-sm" data-view-split="${b.id}">${icons.users} جزئیات</button><button class="icon-btn" data-edit-split="${b.id}" aria-label="ویرایش دنگ">${icons.edit}</button><button class="icon-btn btn-danger" data-delete-split="${b.id}" aria-label="حذف دنگ">${icons.trash}</button></div></article>`;
+      const position=splitPosition(b),open=splitOpenCount(b),progress=splitProgressData(b),expenses=b.expenses||[],total=splitTotal(b),method=expenses.length===1?splitMethodLabel(expenses[0].method):'چندپرداختی';
+      return `<article class="split-card glass"><div class="split-card-head"><div class="split-card-title"><h3>${esc(b.title)}</h3><div class="split-card-meta"><span>${formatFaDateShort(b.date)}</span><i></i><span>${formatNumber(expenses.length)} هزینه</span><i></i><span>${formatNumber(b.participants.length)} نفر</span></div></div><span class="split-method-badge">${expenses.length>1?icons.receipt||icons.split:SPLIT_METHODS[expenses[0]?.method]?.icon||icons.split}${method}</span></div><div class="split-primary"><div class="split-total"><span>مجموع هزینه‌ها</span><strong>${moneyHTML(total,{compact:true})}</strong></div><div class="split-you"><span>${position.label}</span><strong class="${position.receivable?'positive':position.payable?'negative':'muted'}">${position.amount?moneyHTML(position.amount,{compact:true,stack:true}):'همه حساب‌اند'}</strong></div></div><div class="split-people"><div class="avatar-stack">${b.participants.slice(0,5).map(p=>`<span class="person-avatar" title="${esc(p.name)}">${esc(splitInitials(p.name))}</span>`).join('')}${b.participants.length>5?`<span class="person-avatar">+${formatNumber(b.participants.length-5)}</span>`:''}</div><span class="split-member-count">${open?`${formatNumber(open)} انتقال پیشنهادی`:'تسویه کامل'}</span></div><div class="split-progress"><div class="meter-head"><span>${progress.remaining?`${money(progress.remaining)} باقی مانده`:'بدون بدهی باز'}</span><strong>${formatNumber(progress.pct)}٪</strong></div><div class="meter-track"><div class="meter-fill" style="width:${progress.pct}%;--meter-color:${open?'var(--accent)':'var(--success)'}"></div></div></div><div class="split-card-actions"><button class="btn btn-sm" data-view-split="${b.id}">${icons.users} جزئیات</button><button class="icon-btn" data-edit-split="${b.id}" aria-label="ویرایش گروه">${icons.edit}</button><button class="icon-btn btn-danger" data-delete-split="${b.id}" aria-label="حذف گروه">${icons.trash}</button></div></article>`;
     }
     views.splits=function(){
-      const q=normalizedText(splitQuery),items=[...state.splits].filter(b=>!q||normalizedText([b.title,b.notes,splitMethodLabel(b.method),...b.participants.map(p=>p.name)].join(' ')).includes(q)).sort((a,b)=>(b.date||'').localeCompare(a.date||'')||(b.createdAt||'').localeCompare(a.createdAt||''));
-      return `${splitOverview()}<div class="split-toolbar"><div class="search-box">${icons.search}<input class="field" id="splitSearch" value="${esc(splitQuery)}" placeholder="جست‌وجو در عنوان یا نام افراد…"></div><button class="btn btn-primary" id="addSplitBtn">${icons.plus} دنگ جدید</button></div>${items.length?`<div class="split-list">${items.map(splitCard).join('')}</div>`:emptyCard('هنوز دنگی ثبت نشده','هزینهٔ سفر، رستوران، خرید گروهی یا قبض مشترک را میان افراد تقسیم کنید.',`<button class="btn btn-primary" id="addSplitEmpty">${icons.plus} ساخت اولین دنگ</button>`)}`;
+      const q=normalizedText(splitQuery),items=[...state.splits].map(migrateSplitBill).filter(b=>!q||normalizedText([b.title,b.notes,...b.participants.map(p=>p.name),...b.expenses.map(e=>e.title)].join(' ')).includes(q)).sort((a,b)=>(b.date||'').localeCompare(a.date||'')||(b.createdAt||'').localeCompare(a.createdAt||''));
+      return `${splitOverview()}<div class="split-toolbar"><div class="search-box">${icons.search}<input class="field" id="splitSearch" value="${esc(splitQuery)}" placeholder="جست‌وجو در سفر، هزینه یا افراد…"></div><div class="split-toolbar-actions"><button class="btn" id="addTripBtn">${icons.users} سفر یا گروه</button><button class="btn btn-primary" id="addSplitBtn">${icons.plus} دنگ سریع</button></div></div>${items.length?`<div class="split-list">${items.map(splitCard).join('')}</div>`:emptyCard('هنوز دنگ یا سفری ثبت نشده','برای یک هزینهٔ ساده «دنگ سریع» و برای چند پرداخت در طول سفر «سفر یا گروه» را انتخاب کنید.',`<div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap"><button class="btn" id="addTripEmpty">${icons.users} ساخت سفر</button><button class="btn btn-primary" id="addSplitEmpty">${icons.plus} دنگ سریع</button></div>`)}`;
     };
 
-    function defaultSplitDraft(){return{id:null,title:'',total:0,enteredCurrency:state.settings.currency||'toman',method:'equal',date:todayISO(),payerId:'',notes:'',participants:[{id:uid('person'),name:'من',isMe:true,value:1,exactToman:0,settled:true},{id:uid('person'),name:'',isMe:false,value:1,exactToman:0,settled:false}]}}
-    function billToDraft(b){return{id:b.id,title:b.title,total:b.total,enteredCurrency:b.enteredCurrency||state.settings.currency||'toman',method:b.method,date:b.date,payerId:b.payerId,notes:b.notes||'',participants:b.participants.map(p=>({id:p.id,name:p.name,isMe:!!p.isMe,value:p.value??1,exactToman:p.method==='exact'?p.amount:p.amount,amount:p.amount,settled:!!p.settled}))}}
-    let activeSplitDraft=null;
+    function defaultSplitDraft(){return{id:null,title:'',total:0,enteredCurrency:state.settings.currency||'toman',method:'equal',date:todayISO(),payerId:'',notes:'',participants:[{id:uid('person'),name:'من',isMe:true,value:1,exactToman:0,included:true},{id:uid('person'),name:'',isMe:false,value:1,exactToman:0,included:true}]}}
     function splitMethodButtons(method){return `<div class="split-methods">${Object.entries(SPLIT_METHODS).map(([id,m])=>`<button type="button" class="split-method ${method===id?'active':''}" data-split-method="${id}" title="${esc(m.hint)}">${m.icon}<span>${m.label}</span><small>${m.hint}</small></button>`).join('')}</div>`}
-    function formatDecimal(value,max=2){return Number(value||0).toLocaleString('fa-IR',{maximumFractionDigits:max})}
-    function splitValueMeta(method){return method==='percent'?'٪':method==='shares'?'سهم':method==='exact'?currencyLabelFor(activeSplitDraft?.enteredCurrency):''}
-    function currencyLabelFor(c){return c==='rial'?'ریال':'تومان'}
+    function splitValueMeta(method,currency){return method==='percent'?'٪':method==='shares'?'سهم':method==='exact'?currencyLabelFor(currency):''}
     function splitParticipantRows(){
-      const d=activeSplitDraft,result=computeSplitAmounts(d),meta=splitValueMeta(d.method);
-      return d.participants.map((p,i)=>`<div class="split-person-row" data-split-person="${p.id}"><span class="person-avatar">${esc(splitInitials(p.name||toFa(i+1)))}</span><input class="field" data-split-name="${p.id}" value="${esc(p.name)}" placeholder="${p.isMe?'من':'نام نفر'}" aria-label="نام فرد">${d.method==='equal'?`<div class="split-value-field"><input class="field" value="برابر" disabled aria-label="سهم برابر"></div>`:`<div class="split-value-field"><input class="field" inputmode="decimal" data-split-value="${p.id}" value="${d.method==='exact'?(p.exactToman?formatNumber(amountForCurrency(p.exactToman,d.enteredCurrency)):''):formatDecimal(p.value??(d.method==='shares'?1:0))}" placeholder="۰" aria-label="${SPLIT_METHODS[d.method].label}"><small>${meta}</small></div>`}<div class="split-calculated" data-split-calculated="${p.id}">${moneyHTML(result.amounts[i]||0,{compact:true,stack:true})}</div><button type="button" class="split-remove" data-remove-split-person="${p.id}" ${p.isMe||d.participants.length<=2?'disabled':''} aria-label="حذف فرد">${icons.close}</button></div>`).join('');
+      const d=activeSplitDraft,result=computeSplitAmounts(d),meta=splitValueMeta(d.method,d.enteredCurrency);
+      return d.participants.map((p,i)=>`<div class="split-person-row" data-split-person="${p.id}"><span class="person-avatar">${esc(splitInitials(p.name||toFa(i+1)))}</span><input class="field" data-split-name="${p.id}" value="${esc(p.name)}" placeholder="${p.isMe?'من':'نام نفر'}" aria-label="نام فرد">${d.method==='equal'?`<div class="split-value-field"><input class="field" value="برابر" disabled></div>`:`<div class="split-value-field"><input class="field" inputmode="decimal" data-split-value="${p.id}" value="${d.method==='exact'?(p.exactToman?formatNumber(amountForCurrency(p.exactToman,d.enteredCurrency)):''):formatDecimal(p.value??(d.method==='shares'?1:0))}" placeholder="۰"><small>${meta}</small></div>`}<div class="split-calculated" data-split-calculated="${p.id}">${moneyHTML(result.amounts[i]||0,{compact:true,stack:true})}</div><button type="button" class="split-remove" data-remove-split-person="${p.id}" ${p.isMe||d.participants.length<=2?'disabled':''}>${icons.close}</button></div>`).join('');
     }
-    function splitPayerOptions(){const d=activeSplitDraft;return d.participants.map(p=>`<option value="${p.id}" ${p.id===d.payerId?'selected':''}>${esc(p.name||'بدون نام')}</option>`).join('')}
-    function openSplitModal(id=null){
-      const old=state.splits.find(b=>b.id===id);activeSplitDraft=old?billToDraft(old):defaultSplitDraft();if(!activeSplitDraft.payerId)activeSplitDraft.payerId=activeSplitDraft.participants[0].id;
-      openModal(id?'ویرایش دنگ':'دنگ جدید',`<form id="splitForm"><div class="form-grid"><div class="form-group full"><label>عنوان</label><input class="field" id="splitTitle" value="${esc(activeSplitDraft.title)}" placeholder="مثلاً شام دوستانه یا سفر شمال" required></div><div class="form-group"><label>مبلغ کل</label><input class="field" id="splitTotal" inputmode="decimal" value="${activeSplitDraft.total?formatNumber(amountForCurrency(activeSplitDraft.total,activeSplitDraft.enteredCurrency)):''}" placeholder="۰" required></div><div class="form-group"><label>واحد مبلغ</label><select class="select" id="splitCurrency"><option value="toman" ${activeSplitDraft.enteredCurrency==='toman'?'selected':''}>تومان</option><option value="rial" ${activeSplitDraft.enteredCurrency==='rial'?'selected':''}>ریال</option></select></div><div class="form-group"><label>تاریخ</label><input class="field" id="splitDate" type="date" value="${activeSplitDraft.date}" required>${dateHelp(activeSplitDraft.date)}</div><div class="form-group"><label>پرداخت‌کننده</label><select class="select" id="splitPayer">${splitPayerOptions()}</select></div><div class="form-group full"><label>روش تقسیم</label>${splitMethodButtons(activeSplitDraft.method)}</div><div class="form-group full"><label>افراد و سهم هر نفر</label><div class="split-composer" id="splitParticipants">${splitParticipantRows()}</div><button class="split-add-person" id="addSplitPerson" type="button">${icons.plus} افزودن نفر</button></div><div class="form-group full"><div class="split-checkline" id="splitCheckline"><span>وضعیت تقسیم</span><strong id="splitCheckText">—</strong></div></div><div class="form-group full"><label>یادداشت اختیاری</label><textarea class="textarea" id="splitNotes" placeholder="توضیح، محل یا جزئیات پرداخت…">${esc(activeSplitDraft.notes)}</textarea></div></div><div class="form-actions"><button type="button" class="btn" data-close-modal>انصراف</button><button class="btn btn-primary" type="submit">${id?'ذخیره تغییرات':'ثبت دنگ'}</button></div></form>`,bindSplitComposer);
+    function splitPayerOptions(d=activeSplitDraft){return d.participants.map(p=>`<option value="${p.id}" ${p.id===d.payerId?'selected':''}>${esc(p.name||'بدون نام')}</option>`).join('')}
+    function initializeSplitValues(method,d=activeSplitDraft){const people=d.participants.filter(p=>p.included!==false),n=Math.max(1,people.length),equal=allocateByWeights(d.total||d.amount,people.map(()=>1));people.forEach((p,i)=>{if(method==='percent')p.value=100/n;if(method==='shares')p.value=1;if(method==='exact')p.exactToman=equal[i]||0})}
+    function openSplitModal(){
+      activeSplitDraft=defaultSplitDraft();activeSplitDraft.payerId=activeSplitDraft.participants[0].id;
+      openModal('دنگ سریع',`<form id="splitForm"><div class="form-grid"><div class="form-group full"><label>عنوان</label><input class="field" id="splitTitle" placeholder="مثلاً شام دوستانه" required></div><div class="form-group"><label>مبلغ کل</label><input class="field" id="splitTotal" inputmode="decimal" placeholder="۰" required></div><div class="form-group"><label>واحد مبلغ</label><select class="select" id="splitCurrency"><option value="toman" ${activeSplitDraft.enteredCurrency==='toman'?'selected':''}>تومان</option><option value="rial" ${activeSplitDraft.enteredCurrency==='rial'?'selected':''}>ریال</option></select></div><div class="form-group"><label>تاریخ شمسی</label>${jalaliDateField('splitDate',activeSplitDraft.date)}</div><div class="form-group"><label>پرداخت‌کننده</label><select class="select" id="splitPayer">${splitPayerOptions()}</select></div><div class="form-group full"><label>روش تقسیم</label>${splitMethodButtons(activeSplitDraft.method)}</div><div class="form-group full"><label>افراد و سهم هر نفر</label><div class="split-composer" id="splitParticipants">${splitParticipantRows()}</div><button class="split-add-person" id="addSplitPerson" type="button">${icons.plus} افزودن نفر</button></div><div class="form-group full"><div class="split-checkline" id="splitCheckline"><span>وضعیت تقسیم</span><strong id="splitCheckText">—</strong></div></div><div class="form-group full"><label>یادداشت اختیاری</label><textarea class="textarea" id="splitNotes" placeholder="توضیح کوتاه…"></textarea></div></div><div class="form-actions"><button type="button" class="btn" data-close-modal>انصراف</button><button class="btn btn-primary" type="submit">ثبت دنگ</button></div></form>`,bindSplitComposer);
     }
-    function initializeSplitValues(method){
-      const d=activeSplitDraft,n=Math.max(1,d.participants.length),equal=allocateByWeights(d.total,d.participants.map(()=>1));
-      d.participants.forEach((p,i)=>{if(method==='percent')p.value=100/n;if(method==='shares')p.value=1;if(method==='exact')p.exactToman=equal[i]||0});
-    }
-    function refreshSplitRows(){
-      $('#splitParticipants').innerHTML=splitParticipantRows();$('#splitPayer').innerHTML=splitPayerOptions();bindSplitRowEvents();updateSplitPreview();
-    }
+    function refreshSplitRows(){$('#splitParticipants').innerHTML=splitParticipantRows();$('#splitPayer').innerHTML=splitPayerOptions();bindSplitRowEvents();updateSplitPreview()}
     function bindSplitRowEvents(){
-      $$('[data-split-name]').forEach(input=>input.oninput=()=>{const p=activeSplitDraft.participants.find(x=>x.id===input.dataset.splitName);if(p)p.name=input.value;const av=$(`[data-split-person="${input.dataset.splitName}"] .person-avatar`);if(av)av.textContent=splitInitials(input.value);const payer=$('#splitPayer'),selected=payer.value;payer.innerHTML=splitPayerOptions();payer.value=selected;});
+      $$('[data-split-name]').forEach(input=>input.oninput=()=>{const p=activeSplitDraft.participants.find(x=>x.id===input.dataset.splitName);if(p)p.name=input.value;const av=$(`[data-split-person="${input.dataset.splitName}"] .person-avatar`);if(av)av.textContent=splitInitials(input.value);const payer=$('#splitPayer'),selected=payer.value;payer.innerHTML=splitPayerOptions();payer.value=selected});
       $$('[data-split-value]').forEach(input=>input.oninput=()=>{const p=activeSplitDraft.participants.find(x=>x.id===input.dataset.splitValue);if(!p)return;if(activeSplitDraft.method==='exact')p.exactToman=amountFromCurrency(input.value,activeSplitDraft.enteredCurrency);else p.value=num(input.value);updateSplitPreview()});
-      $$('[data-remove-split-person]').forEach(btn=>btn.onclick=()=>{activeSplitDraft.participants=activeSplitDraft.participants.filter(p=>p.id!==btn.dataset.removeSplitPerson);if(!activeSplitDraft.participants.some(p=>p.id===activeSplitDraft.payerId))activeSplitDraft.payerId=activeSplitDraft.participants[0]?.id||'';refreshSplitRows()});
+      $$('[data-remove-split-person]').forEach(btn=>btn.onclick=()=>{activeSplitDraft.participants=activeSplitDraft.participants.filter(p=>p.id!==btn.dataset.removeSplitPerson);if(!activeSplitDraft.participants.some(p=>p.id===activeSplitDraft.payerId))activeSplitDraft.payerId=activeSplitDraft.participants[0]?.id||'';initializeSplitValues(activeSplitDraft.method);refreshSplitRows()});
     }
-    function updateSplitPreview(){
-      const r=computeSplitAmounts(activeSplitDraft);activeSplitDraft.participants.forEach((p,i)=>{const el=$(`[data-split-calculated="${p.id}"]`);if(el)el.innerHTML=moneyHTML(r.amounts[i]||0,{compact:true,stack:true})});
-      const line=$('#splitCheckline'),text=$('#splitCheckText');if(!line||!text)return;let valid=r.valid&&activeSplitDraft.total>0;
-      line.classList.toggle('valid',valid);line.classList.toggle('invalid',!valid);text.textContent=activeSplitDraft.total<=0?'مبلغ کل را وارد کنید':(r.message||`${money(r.sum)} تقسیم شد`);
-    }
+    function updateSplitPreview(){const r=computeSplitAmounts(activeSplitDraft);activeSplitDraft.participants.forEach((p,i)=>{const el=$(`[data-split-calculated="${p.id}"]`);if(el)el.innerHTML=moneyHTML(r.amounts[i]||0,{compact:true,stack:true})});const line=$('#splitCheckline'),text=$('#splitCheckText');if(!line||!text)return;const valid=r.valid&&activeSplitDraft.total>0;line.classList.toggle('valid',valid);line.classList.toggle('invalid',!valid);text.textContent=activeSplitDraft.total<=0?'مبلغ کل را وارد کنید':(r.message||`${money(r.sum)} تقسیم شد`)}
     function bindSplitComposer(){
-      $('[data-close-modal]').onclick=closeModal;bindSplitRowEvents();updateSplitPreview();
-      $('#splitTitle').oninput=e=>activeSplitDraft.title=e.target.value;$('#splitDate').onchange=e=>{activeSplitDraft.date=e.target.value;$('#dateHelp').textContent=`${formatFaDate(e.target.value)} • ${formatGregorian(e.target.value)}`};$('#splitNotes').oninput=e=>activeSplitDraft.notes=e.target.value;$('#splitPayer').onchange=e=>activeSplitDraft.payerId=e.target.value;
-      $('#splitTotal').oninput=e=>{activeSplitDraft.total=amountFromCurrency(e.target.value,activeSplitDraft.enteredCurrency);updateSplitPreview()};
-      $('#splitCurrency').onchange=e=>{activeSplitDraft.enteredCurrency=e.target.value;$('#splitTotal').value=activeSplitDraft.total?formatNumber(amountForCurrency(activeSplitDraft.total,e.target.value)):'';refreshSplitRows()};
+      $('[data-close-modal]').onclick=closeModal;bindSplitRowEvents();updateSplitPreview();$('#splitTitle').oninput=e=>activeSplitDraft.title=e.target.value;$('#splitDate').onchange=e=>{activeSplitDraft.date=e.target.value;refreshJalaliDateField('splitDate')};$('#splitNotes').oninput=e=>activeSplitDraft.notes=e.target.value;$('#splitPayer').onchange=e=>activeSplitDraft.payerId=e.target.value;
+      $('#splitTotal').oninput=e=>{activeSplitDraft.total=amountFromCurrency(e.target.value,activeSplitDraft.enteredCurrency);updateSplitPreview()};$('#splitCurrency').onchange=e=>{activeSplitDraft.enteredCurrency=e.target.value;$('#splitTotal').value=activeSplitDraft.total?formatNumber(amountForCurrency(activeSplitDraft.total,e.target.value)):'';refreshSplitRows()};
       $$('[data-split-method]').forEach(btn=>btn.onclick=()=>{activeSplitDraft.method=btn.dataset.splitMethod;initializeSplitValues(activeSplitDraft.method);$$('[data-split-method]').forEach(x=>x.classList.toggle('active',x===btn));refreshSplitRows()});
-      $('#addSplitPerson').onclick=()=>{const n=activeSplitDraft.participants.length+1,person={id:uid('person'),name:'',isMe:false,value:activeSplitDraft.method==='percent'?0:1,exactToman:0,settled:false};activeSplitDraft.participants.push(person);initializeSplitValues(activeSplitDraft.method);refreshSplitRows();setTimeout(()=>$(`[data-split-name="${person.id}"]`)?.focus(),20)};
-      $('#splitForm').onsubmit=e=>{e.preventDefault();const d=activeSplitDraft;d.title=$('#splitTitle').value.trim();d.notes=$('#splitNotes').value.trim();d.date=$('#splitDate').value;d.payerId=$('#splitPayer').value;d.total=amountFromCurrency($('#splitTotal').value,d.enteredCurrency);const names=d.participants.map(p=>p.name.trim());if(!d.title)return toast('عنوان لازم است','یک عنوان کوتاه برای دنگ بنویسید.','warning');if(d.total<=0)return toast('مبلغ نامعتبر','مبلغ کل باید بزرگ‌تر از صفر باشد.','warning');if(d.participants.length<2)return toast('افراد کافی نیستند','حداقل دو نفر برای تقسیم هزینه لازم است.','warning');if(names.some(n=>!n))return toast('نام ناقص است','نام همهٔ افراد را وارد کنید.','warning');if(new Set(names.map(normalizedText)).size!==names.length)return toast('نام تکراری است','برای هر فرد نام متفاوتی وارد کنید.','warning');const r=computeSplitAmounts(d,{strict:true});if(!r.valid)return toast('تقسیم کامل نیست',r.message||'مقادیر سهم‌ها را بررسی کنید.','warning');const previous=state.splits.find(b=>b.id===d.id);const item={id:d.id||uid('split'),title:d.title,total:Math.round(d.total),enteredCurrency:d.enteredCurrency,method:d.method,date:d.date,payerId:d.payerId,notes:d.notes,participants:d.participants.map((p,i)=>({id:p.id,name:p.name.trim(),isMe:!!p.isMe,value:d.method==='exact'?(p.exactToman||0):(p.value??1),amount:r.amounts[i],settled:p.id===d.payerId?true:!!p.settled})),createdAt:previous?.createdAt||new Date().toISOString(),updatedAt:new Date().toISOString()};if(previous){pushUndo('ویرایش دنگ',()=>{state.splits=state.splits.map(x=>x.id===previous.id?previous:x);saveState()});state.splits=state.splits.map(x=>x.id===previous.id?item:x)}else state.splits.push(item);saveState();closeModal();toast(previous?'دنگ ویرایش شد':'دنگ ثبت شد',`${money(item.total)} میان ${formatNumber(item.participants.length)} نفر تقسیم شد.`,'success')};
+      $('#addSplitPerson').onclick=()=>{const person={id:uid('person'),name:'',isMe:false,value:activeSplitDraft.method==='percent'?0:1,exactToman:0,included:true};activeSplitDraft.participants.push(person);initializeSplitValues(activeSplitDraft.method);refreshSplitRows();setTimeout(()=>$(`[data-split-name="${person.id}"]`)?.focus(),20)};
+      $('#splitForm').onsubmit=e=>{e.preventDefault();const d=activeSplitDraft;d.title=$('#splitTitle').value.trim();d.notes=$('#splitNotes').value.trim();d.date=$('#splitDate').value;d.payerId=$('#splitPayer').value;d.total=amountFromCurrency($('#splitTotal').value,d.enteredCurrency);const names=d.participants.map(p=>p.name.trim());if(!d.title)return toast('عنوان لازم است','یک عنوان کوتاه بنویسید.','warning');if(d.total<=0)return toast('مبلغ نامعتبر','مبلغ باید بزرگ‌تر از صفر باشد.','warning');if(d.participants.length<2)return toast('افراد کافی نیستند','حداقل دو نفر لازم است.','warning');if(names.some(n=>!n)||new Set(names.map(normalizedText)).size!==names.length)return toast('نام‌ها را بررسی کنید','نام همهٔ افراد باید کامل و غیرتکراری باشد.','warning');const r=computeSplitAmounts(d,{strict:true});if(!r.valid)return toast('تقسیم کامل نیست',r.message,'warning');const group={id:uid('split'),title:d.title,enteredCurrency:d.enteredCurrency,date:d.date,notes:d.notes,participants:d.participants.map(p=>({id:p.id,name:p.name.trim(),isMe:!!p.isMe})),expenses:[{id:uid('spx'),title:d.title,amount:Math.round(d.total),date:d.date,payerId:d.payerId,method:d.method,allocations:d.participants.map((p,i)=>({personId:p.id,value:d.method==='exact'?(p.exactToman||0):(p.value??1),amount:r.amounts[i],included:true})),createdAt:new Date().toISOString()}],settlements:[],createdAt:new Date().toISOString(),updatedAt:new Date().toISOString()};state.splits.push(migrateSplitBill(group));saveState();closeModal();toast('دنگ ثبت شد',`${money(d.total)} میان ${formatNumber(d.participants.length)} نفر تقسیم شد.`,'success')};
     }
+
+    function defaultGroupDraft(){return{id:null,title:'',enteredCurrency:state.settings.currency||'toman',date:todayISO(),notes:'',participants:[{id:uid('person'),name:'من',isMe:true},{id:uid('person'),name:'',isMe:false}]}}
+    function groupPersonRows(){const existing=activeGroupDraft.id?state.splits.find(x=>x.id===activeGroupDraft.id):null;return activeGroupDraft.participants.map((p,i)=>{const used=!!existing&&((existing.expenses||[]).some(e=>e.payerId===p.id||e.allocations?.some(a=>a.personId===p.id))||(existing.settlements||[]).some(x=>x.fromId===p.id||x.toId===p.id));return `<div class="group-person-row"><span class="person-avatar">${esc(splitInitials(p.name||toFa(i+1)))}</span><input class="field" data-group-person-name="${p.id}" value="${esc(p.name)}" placeholder="${p.isMe?'من':'نام نفر'}"><button type="button" class="split-remove" data-remove-group-person="${p.id}" ${p.isMe||activeGroupDraft.participants.length<=2||used?'disabled':''}>${icons.close}</button></div>`}).join('')}
+    function openSplitGroupModal(id=null){
+      const old=state.splits.find(x=>x.id===id);activeGroupDraft=old?{id:old.id,title:old.title,enteredCurrency:old.enteredCurrency,date:old.date,notes:old.notes||'',participants:old.participants.map(p=>({...p}))}:defaultGroupDraft();
+      openModal(id?'ویرایش سفر یا گروه':'سفر یا گروه جدید',`<form id="groupForm"><div class="form-grid"><div class="form-group full"><label>نام سفر یا گروه</label><input class="field" id="groupTitle" value="${esc(activeGroupDraft.title)}" placeholder="مثلاً سفر شمال" required></div><div class="form-group"><label>تاریخ شروع (شمسی)</label>${jalaliDateField('groupDate',activeGroupDraft.date)}</div><div class="form-group"><label>واحد مبلغ</label><select class="select" id="groupCurrency"><option value="toman" ${activeGroupDraft.enteredCurrency==='toman'?'selected':''}>تومان</option><option value="rial" ${activeGroupDraft.enteredCurrency==='rial'?'selected':''}>ریال</option></select></div><div class="form-group full"><label>افراد گروه</label><div class="group-person-list" id="groupPeople">${groupPersonRows()}</div><button class="split-add-person" id="addGroupPerson" type="button">${icons.plus} افزودن نفر</button></div><div class="form-group full"><label>یادداشت اختیاری</label><textarea class="textarea" id="groupNotes" placeholder="مقصد، تاریخ یا توضیح…">${esc(activeGroupDraft.notes)}</textarea></div></div><div class="form-actions"><button type="button" class="btn" data-close-modal>انصراف</button><button class="btn btn-primary" type="submit">${id?'ذخیره تغییرات':'ساخت گروه'}</button></div></form>`,bindGroupComposer);
+    }
+    function refreshGroupRows(){$('#groupPeople').innerHTML=groupPersonRows();bindGroupRows()}
+    function bindGroupRows(){$$('[data-group-person-name]').forEach(input=>input.oninput=()=>{const p=activeGroupDraft.participants.find(x=>x.id===input.dataset.groupPersonName);if(p)p.name=input.value});$$('[data-remove-group-person]').forEach(btn=>btn.onclick=()=>{activeGroupDraft.participants=activeGroupDraft.participants.filter(p=>p.id!==btn.dataset.removeGroupPerson);refreshGroupRows()})}
+    function bindGroupComposer(){
+      $('[data-close-modal]').onclick=closeModal;bindGroupRows();$('#addGroupPerson').onclick=()=>{const p={id:uid('person'),name:'',isMe:false};activeGroupDraft.participants.push(p);refreshGroupRows();setTimeout(()=>$(`[data-group-person-name="${p.id}"]`)?.focus(),20)};
+      $('#groupForm').onsubmit=e=>{e.preventDefault();activeGroupDraft.title=$('#groupTitle').value.trim();activeGroupDraft.date=$('#groupDate').value;activeGroupDraft.enteredCurrency=$('#groupCurrency').value;activeGroupDraft.notes=$('#groupNotes').value.trim();const names=activeGroupDraft.participants.map(p=>p.name.trim());if(!activeGroupDraft.title)return toast('نام گروه لازم است','یک نام کوتاه برای سفر یا گروه بنویسید.','warning');if(names.some(n=>!n)||new Set(names.map(normalizedText)).size!==names.length)return toast('نام‌ها را بررسی کنید','نام همهٔ افراد باید کامل و غیرتکراری باشد.','warning');const old=state.splits.find(x=>x.id===activeGroupDraft.id);let group;if(old){const previous=structuredClone(old);group={...old,title:activeGroupDraft.title,date:activeGroupDraft.date,enteredCurrency:activeGroupDraft.enteredCurrency,notes:activeGroupDraft.notes,participants:activeGroupDraft.participants.map(p=>({id:p.id,name:p.name.trim(),isMe:!!p.isMe})),updatedAt:new Date().toISOString()};pushUndo('ویرایش گروه',()=>{state.splits=state.splits.map(x=>x.id===previous.id?previous:x);saveState()});state.splits=state.splits.map(x=>x.id===group.id?migrateSplitBill(group):x)}else{group=migrateSplitBill({id:uid('split'),title:activeGroupDraft.title,date:activeGroupDraft.date,enteredCurrency:activeGroupDraft.enteredCurrency,notes:activeGroupDraft.notes,participants:activeGroupDraft.participants.map(p=>({id:p.id,name:p.name.trim(),isMe:!!p.isMe})),expenses:[],settlements:[],createdAt:new Date().toISOString(),updatedAt:new Date().toISOString()});state.splits.push(group)}saveState({render:false});openSplitDetails(group.id);toast(old?'گروه ویرایش شد':'گروه ساخته شد',old?'مشخصات و افراد به‌روزرسانی شدند.':'حالا هزینه‌های سفر را یکی‌یکی اضافه کنید.','success')};
+    }
+
+    function expenseDraftFrom(group,expense=null){return{id:expense?.id||null,groupId:group.id,title:expense?.title||'',amount:expense?.amount||0,date:expense?.date||todayISO(),payerId:expense?.payerId||group.participants[0]?.id||'',method:expense?.method||'equal',participants:group.participants.map(p=>{const a=expense?.allocations?.find(x=>x.personId===p.id);return{id:p.id,name:p.name,isMe:p.isMe,included:a? a.included!==false:true,value:a?.value??1,exactToman:a?.amount||0}})}}
+    function expensePayerOptions(){const group=state.splits.find(x=>x.id===activeExpenseDraft.groupId);return group.participants.map(p=>`<option value="${p.id}" ${p.id===activeExpenseDraft.payerId?'selected':''}>${esc(p.name)}</option>`).join('')}
+    function expenseParticipantRows(){const d=activeExpenseDraft,r=computeSplitAmounts(d),included=d.participants.filter(p=>p.included!==false),meta=splitValueMeta(d.method,state.splits.find(x=>x.id===d.groupId)?.enteredCurrency);return d.participants.map(p=>{const idx=included.findIndex(x=>x.id===p.id),amount=idx>=0?r.amounts[idx]||0:0;return `<div class="expense-person-row ${p.included===false?'is-excluded':''}" data-expense-person="${p.id}"><input class="expense-include" type="checkbox" data-expense-include="${p.id}" ${p.included!==false?'checked':''} aria-label="شرکت در هزینه"><span class="person-avatar">${esc(splitInitials(p.name))}</span><span class="expense-person-name">${esc(p.name)}</span>${d.method==='equal'?`<div class="split-value-field"><input class="field" value="برابر" disabled></div>`:`<div class="split-value-field"><input class="field" inputmode="decimal" data-expense-value="${p.id}" value="${d.method==='exact'?(p.exactToman?formatNumber(amountForCurrency(p.exactToman,state.splits.find(x=>x.id===d.groupId)?.enteredCurrency)):''):formatDecimal(p.value??1)}" placeholder="۰" ${p.included===false?'disabled':''}><small>${meta}</small></div>`}<div class="expense-calculated" data-expense-calculated="${p.id}">${moneyHTML(amount,{compact:true,stack:true})}</div></div>`}).join('')}
+    function openGroupExpenseModal(groupId,expenseId=null){
+      const group=state.splits.find(x=>x.id===groupId),expense=group?.expenses.find(e=>e.id===expenseId);if(!group)return;activeExpenseDraft=expenseDraftFrom(group,expense);
+      openModal(expense?'ویرایش هزینه':'افزودن هزینه',`<form id="expenseForm"><div class="form-grid"><div class="form-group full"><label>عنوان هزینه</label><input class="field" id="expenseTitle" value="${esc(activeExpenseDraft.title)}" placeholder="مثلاً بنزین، هتل یا شام" required></div><div class="form-group"><label>مبلغ</label><input class="field" id="expenseAmount" inputmode="decimal" value="${activeExpenseDraft.amount?formatNumber(amountForCurrency(activeExpenseDraft.amount,group.enteredCurrency)):''}" placeholder="۰" required></div><div class="form-group"><label>پرداخت‌کننده</label><select class="select" id="expensePayer">${expensePayerOptions()}</select></div><div class="form-group"><label>تاریخ هزینه (شمسی)</label>${jalaliDateField('expenseDate',activeExpenseDraft.date)}</div><div class="form-group full"><label>روش تقسیم</label>${splitMethodButtons(activeExpenseDraft.method)}</div><div class="form-group full"><label>افراد شریک در این هزینه</label><div class="split-composer" id="expensePeople">${expenseParticipantRows()}</div></div><div class="form-group full"><div class="split-checkline" id="expenseCheckline"><span>وضعیت تقسیم</span><strong id="expenseCheckText">—</strong></div></div></div><div class="form-actions"><button type="button" class="btn" data-back-to-split="${group.id}">انصراف</button><button class="btn btn-primary" type="submit">${expense?'ذخیره هزینه':'افزودن هزینه'}</button></div></form>`,bindExpenseComposer);
+    }
+    function initializeExpenseValues(){const people=activeExpenseDraft.participants.filter(p=>p.included!==false),n=Math.max(1,people.length),equal=allocateByWeights(activeExpenseDraft.amount,people.map(()=>1));people.forEach((p,i)=>{if(activeExpenseDraft.method==='percent')p.value=100/n;if(activeExpenseDraft.method==='shares')p.value=1;if(activeExpenseDraft.method==='exact')p.exactToman=equal[i]||0})}
+    function refreshExpenseRows(){$('#expensePeople').innerHTML=expenseParticipantRows();bindExpenseRows();updateExpensePreview()}
+    function bindExpenseRows(){
+      $$('[data-expense-include]').forEach(ch=>ch.onchange=()=>{const p=activeExpenseDraft.participants.find(x=>x.id===ch.dataset.expenseInclude);if(p)p.included=ch.checked;initializeExpenseValues();refreshExpenseRows()});
+      $$('[data-expense-value]').forEach(input=>input.oninput=()=>{const p=activeExpenseDraft.participants.find(x=>x.id===input.dataset.expenseValue);if(!p)return;const group=state.splits.find(x=>x.id===activeExpenseDraft.groupId);if(activeExpenseDraft.method==='exact')p.exactToman=amountFromCurrency(input.value,group.enteredCurrency);else p.value=num(input.value);updateExpensePreview()});
+    }
+    function updateExpensePreview(){const r=computeSplitAmounts(activeExpenseDraft),included=activeExpenseDraft.participants.filter(p=>p.included!==false);activeExpenseDraft.participants.forEach(p=>{const idx=included.findIndex(x=>x.id===p.id),el=$(`[data-expense-calculated="${p.id}"]`);if(el)el.innerHTML=moneyHTML(idx>=0?r.amounts[idx]||0:0,{compact:true,stack:true})});const line=$('#expenseCheckline'),text=$('#expenseCheckText');if(!line||!text)return;const valid=r.valid&&activeExpenseDraft.amount>0;line.classList.toggle('valid',valid);line.classList.toggle('invalid',!valid);text.textContent=activeExpenseDraft.amount<=0?'مبلغ را وارد کنید':r.message||`${money(r.sum)} تقسیم شد`}
+    function bindExpenseComposer(){
+      const group=state.splits.find(x=>x.id===activeExpenseDraft.groupId);$('[data-back-to-split]').onclick=()=>openSplitDetails(group.id);bindExpenseRows();updateExpensePreview();$('#expenseTitle').oninput=e=>activeExpenseDraft.title=e.target.value;$('#expensePayer').onchange=e=>activeExpenseDraft.payerId=e.target.value;$('#expenseDate').onchange=e=>activeExpenseDraft.date=e.target.value;$('#expenseAmount').oninput=e=>{activeExpenseDraft.amount=amountFromCurrency(e.target.value,group.enteredCurrency);updateExpensePreview()};
+      $$('[data-split-method]').forEach(btn=>btn.onclick=()=>{activeExpenseDraft.method=btn.dataset.splitMethod;initializeExpenseValues();$$('[data-split-method]').forEach(x=>x.classList.toggle('active',x===btn));refreshExpenseRows()});
+      $('#expenseForm').onsubmit=e=>{e.preventDefault();activeExpenseDraft.title=$('#expenseTitle').value.trim();activeExpenseDraft.amount=amountFromCurrency($('#expenseAmount').value,group.enteredCurrency);activeExpenseDraft.payerId=$('#expensePayer').value;activeExpenseDraft.date=$('#expenseDate').value;const included=activeExpenseDraft.participants.filter(p=>p.included!==false),r=computeSplitAmounts(activeExpenseDraft,{strict:true});if(!activeExpenseDraft.title)return toast('عنوان لازم است','عنوان هزینه را وارد کنید.','warning');if(activeExpenseDraft.amount<=0)return toast('مبلغ نامعتبر','مبلغ باید بزرگ‌تر از صفر باشد.','warning');if(!included.length)return toast('فردی انتخاب نشده','حداقل یک نفر باید در هزینه شریک باشد.','warning');if(!r.valid)return toast('تقسیم کامل نیست',r.message,'warning');const previous=group.expenses.find(x=>x.id===activeExpenseDraft.id),item={id:activeExpenseDraft.id||uid('spx'),title:activeExpenseDraft.title,amount:Math.round(activeExpenseDraft.amount),date:activeExpenseDraft.date,payerId:activeExpenseDraft.payerId,method:activeExpenseDraft.method,allocations:included.map((p,i)=>({personId:p.id,value:activeExpenseDraft.method==='exact'?(p.exactToman||0):(p.value??1),amount:r.amounts[i],included:true})),createdAt:previous?.createdAt||new Date().toISOString(),updatedAt:new Date().toISOString()};if(previous)group.expenses=group.expenses.map(x=>x.id===item.id?item:x);else group.expenses.push(item);group.total=splitTotal(group);group.updatedAt=new Date().toISOString();saveState({render:false});openSplitDetails(group.id);toast(previous?'هزینه ویرایش شد':'هزینه اضافه شد',`${esc(item.title)} • ${money(item.amount)}`,'success')};
+    }
+
+    function splitExpenseRow(b,e){const payer=b.participants.find(p=>p.id===e.payerId);return `<div class="trip-expense-row"><span class="trip-row-icon">${icons.receipt||icons.expense}</span><div class="trip-row-main"><strong>${esc(e.title)}</strong><span>${formatFaDateShort(e.date)} • ${esc(payer?.name||'—')} پرداخت کرده • ${splitMethodLabel(e.method)}</span></div><strong class="trip-row-money">${moneyHTML(e.amount,{compact:true,stack:true})}</strong><div class="trip-row-actions"><button class="icon-btn" data-edit-group-expense="${e.id}" aria-label="ویرایش هزینه">${icons.edit}</button><button class="icon-btn btn-danger" data-delete-group-expense="${e.id}" aria-label="حذف هزینه">${icons.trash}</button></div></div>`}
+    function splitBalanceRow(p){const status=p.balance>0?'بستانکار':p.balance<0?'بدهکار':'تسویه',cls=p.balance>0?'positive':p.balance<0?'negative':'muted';return `<div class="trip-balance-row"><span class="person-avatar">${esc(splitInitials(p.name))}</span><div class="trip-row-main"><strong>${esc(p.name)} ${p.isMe?'<span class="badge info">من</span>':''}</strong><span>${money(p.paid)} پرداخت • ${money(p.owed)} سهم</span></div><strong class="trip-row-money ${cls}">${status==='تسویه'?'تسویه':moneyHTML(Math.abs(p.balance),{compact:true,stack:true})}</strong></div>`}
+    function splitTransferRow(b,t){const from=b.participants.find(p=>p.id===t.fromId),to=b.participants.find(p=>p.id===t.toId);return `<div class="trip-transfer-row"><span class="person-avatar">${esc(splitInitials(from?.name))}</span><div class="trip-row-main"><strong>${esc(from?.name||'—')} <span class="trip-transfer-arrow">به</span> ${esc(to?.name||'—')}</strong><span>${money(t.amount)} برای تسویهٔ بهینه</span></div><button class="btn btn-sm btn-success trip-transfer-button" data-record-settlement="${t.fromId}|${t.toId}|${t.amount}">${icons.check} ثبت پرداخت</button></div>`}
     function openSplitDetails(id){
-      const b=state.splits.find(x=>x.id===id);if(!b)return;const payer=splitPayer(b),position=splitPosition(b);
-      openModal('جزئیات دنگ',`<div class="setting-row" style="margin-bottom:12px;flex-direction:row;align-items:center"><div><h4>${esc(b.title)}</h4><p>${formatFaDate(b.date)} • ${formatGregorian(b.date)} • ${splitMethodLabel(b.method)}</p></div><strong>${moneyHTML(b.total,{compact:true})}</strong></div><div class="split-detail-list">${b.participants.map(p=>`<div class="split-detail-row"><span class="person-avatar">${esc(splitInitials(p.name))}</span><div class="split-detail-main"><strong>${esc(p.name)} ${p.isMe?'<span class="badge info">من</span>':''}</strong><span>${p.id===b.payerId?'پرداخت‌کننده':p.settled?'تسویه شده':'در انتظار تسویه'}</span></div><strong>${moneyHTML(p.amount,{compact:true})}</strong>${p.id===b.payerId?'<span class="badge success">پرداخت کرده</span>':`<button class="settle-toggle ${p.settled?'settled':''}" data-toggle-split-settle="${p.id}">${p.settled?'تسویه شد':'ثبت تسویه'}</button>`}</div>`).join('')}</div><div class="split-checkline ${position.amount?'':'valid'}" style="margin-top:12px"><span>${position.label}</span><strong>${position.amount?money(position.amount):'همهٔ سهم‌ها تسویه شده‌اند'}</strong></div><div class="form-actions"><button class="btn" data-close-modal>بستن</button><button class="btn btn-primary" data-edit-split-from-detail="${b.id}">${icons.edit} ویرایش</button></div>`,()=>{$('[data-close-modal]').onclick=closeModal;$('[data-edit-split-from-detail]').onclick=()=>openSplitModal(b.id);$$('[data-toggle-split-settle]').forEach(btn=>btn.onclick=()=>toggleSplitSettlement(b.id,btn.dataset.toggleSplitSettle))});
+      const index=state.splits.findIndex(x=>x.id===id);if(index<0)return;const b=state.splits[index]=migrateSplitBill(state.splits[index]),ledger=splitLedger(b),plan=minimalSettlementPlan(b),position=splitPosition(b),total=splitTotal(b);
+      openModal('جزئیات دنگ و سفر',`<div class="setting-row" style="margin-bottom:8px;flex-direction:row;align-items:center"><div><h4>${esc(b.title)}</h4><p>${formatFaDate(b.date)} • ${formatGregorian(b.date)}</p></div><strong>${moneyHTML(total,{compact:true})}</strong></div><div class="trip-summary-grid"><div class="trip-summary-item"><span>هزینه‌ها</span><strong>${formatNumber(b.expenses.length)} مورد</strong></div><div class="trip-summary-item"><span>افراد</span><strong>${formatNumber(b.participants.length)} نفر</strong></div><div class="trip-summary-item"><span>${position.label}</span><strong class="${position.receivable?'positive':position.payable?'negative':'muted'}">${position.amount?moneyHTML(position.amount,{compact:true,stack:true}):'تسویه'}</strong></div></div><div class="trip-section"><div class="trip-section-head"><div><h4>هزینه‌های گروه</h4><p>هر نفر می‌تواند در طول سفر هزینه‌های جداگانه داشته باشد</p></div><button class="btn btn-sm btn-primary" data-add-group-expense="${b.id}">${icons.plus} هزینه</button></div>${b.expenses.length?`<div class="trip-expense-list">${b.expenses.map(e=>splitExpenseRow(b,e)).join('')}</div>`:`<div class="empty" style="padding:20px"><p>هنوز هزینه‌ای ثبت نشده است.</p></div>`}</div><div class="trip-section"><div class="trip-section-head"><div><h4>ماندهٔ هر نفر</h4><p>پرداخت واقعی منهای سهم مصرف‌شده</p></div></div><div class="trip-balance-list">${ledger.map(splitBalanceRow).join('')}</div></div><div class="trip-section"><div class="trip-section-head"><div><h4>تسویه با کمترین انتقال</h4><p>بدون تغییر ماندهٔ هیچ‌کس، مسیر پرداخت‌ها کوتاه می‌شود</p></div></div>${plan.length?`<div class="trip-optimized-note">${icons.circleCheck}<span>برای تسویهٔ کامل این گروه فقط ${formatNumber(plan.length)} انتقال لازم است.</span></div><div class="trip-transfer-list" style="margin-top:8px">${plan.map(t=>splitTransferRow(b,t)).join('')}</div>`:`<div class="trip-optimized-note">${icons.circleCheck}<span>همهٔ مانده‌ها تسویه شده‌اند و انتقال بازی وجود ندارد.</span></div>`}</div>${b.settlements.length?`<div class="trip-section"><div class="trip-section-head"><div><h4>پرداخت‌های ثبت‌شده</h4><p>برای بازگردانی هر پرداخت روی حذف بزنید</p></div></div><div class="trip-transfer-list">${b.settlements.map(x=>{const f=b.participants.find(p=>p.id===x.fromId),t=b.participants.find(p=>p.id===x.toId);return `<div class="trip-transfer-row done"><span class="person-avatar">${esc(splitInitials(f?.name))}</span><div class="trip-row-main"><strong>${esc(f?.name||'—')} به ${esc(t?.name||'—')}</strong><span>${money(x.amount)} • ${formatFaDateShort(x.date)}</span></div><button class="icon-btn btn-danger" data-delete-settlement="${x.id}" aria-label="حذف تسویه">${icons.trash}</button></div>`}).join('')}</div></div>`:''}<div class="form-actions"><button class="btn" data-close-modal>بستن</button><button class="btn" data-edit-split-from-detail="${b.id}">${icons.edit} افراد و مشخصات</button><button class="btn btn-primary" data-add-group-expense="${b.id}">${icons.plus} افزودن هزینه</button></div>`,()=>bindSplitDetails(b.id));
     }
-    function toggleSplitSettlement(billId,personId){const b=state.splits.find(x=>x.id===billId),p=b?.participants.find(x=>x.id===personId);if(!b||!p||p.id===b.payerId)return;const old=p.settled;p.settled=!p.settled;b.updatedAt=new Date().toISOString();pushUndo('تغییر وضعیت تسویه',()=>{p.settled=old;saveState()});saveState({render:false});openSplitDetails(billId);toast(p.settled?'سهم تسویه شد':'تسویه باز شد',`${p.name} • ${money(p.amount)}`,'success')}
+    function bindSplitDetails(id){
+      $('[data-close-modal]').onclick=closeModal;$('[data-edit-split-from-detail]').onclick=()=>openSplitGroupModal(id);$$('[data-add-group-expense]').forEach(btn=>btn.onclick=()=>openGroupExpenseModal(id));$$('[data-edit-group-expense]').forEach(btn=>btn.onclick=()=>openGroupExpenseModal(id,btn.dataset.editGroupExpense));
+      $$('[data-delete-group-expense]').forEach(btn=>btn.onclick=()=>{const b=state.splits.find(x=>x.id===id),e=b?.expenses.find(x=>x.id===btn.dataset.deleteGroupExpense);if(!e)return;openConfirm('حذف هزینه',`«${esc(e.title)}» از گروه حذف شود؟`,'حذف',()=>{b.expenses=b.expenses.filter(x=>x.id!==e.id);b.updatedAt=new Date().toISOString();saveState({render:false});openSplitDetails(id);toast('هزینه حذف شد','مانده‌ها دوباره محاسبه شدند.','success')})});
+      $$('[data-record-settlement]').forEach(btn=>btn.onclick=()=>{const [fromId,toId,amountRaw]=btn.dataset.recordSettlement.split('|'),b=state.splits.find(x=>x.id===id),amount=Math.round(num(amountRaw));if(!b||amount<=0)return;b.settlements.push({id:uid('settle'),fromId,toId,amount,date:todayISO(),createdAt:new Date().toISOString()});b.updatedAt=new Date().toISOString();saveState({render:false});openSplitDetails(id);toast('پرداخت ثبت شد',`${money(amount)} از مانده کم شد.`,'success')});
+      $$('[data-delete-settlement]').forEach(btn=>btn.onclick=()=>{const b=state.splits.find(x=>x.id===id);if(!b)return;b.settlements=b.settlements.filter(x=>x.id!==btn.dataset.deleteSettlement);b.updatedAt=new Date().toISOString();saveState({render:false});openSplitDetails(id);toast('تسویه بازگردانده شد','پیشنهادهای پرداخت دوباره محاسبه شدند.','success')});
+    }
     function bindSplits(){
-      $('#addSplitBtn')?.addEventListener('click',()=>openSplitModal());$('#addSplitEmpty')?.addEventListener('click',()=>openSplitModal());
+      $('#addSplitBtn')?.addEventListener('click',()=>openSplitModal());$('#addSplitEmpty')?.addEventListener('click',()=>openSplitModal());$('#addTripBtn')?.addEventListener('click',()=>openSplitGroupModal());$('#addTripEmpty')?.addEventListener('click',()=>openSplitGroupModal());
       const search=$('#splitSearch');if(search)search.oninput=debounce(()=>{splitQuery=search.value;renderApp();requestAnimationFrame(()=>{const next=$('#splitSearch');if(next){next.focus();next.setSelectionRange?.(next.value.length,next.value.length)}})},180);
-      $$('[data-view-split]').forEach(b=>b.onclick=()=>openSplitDetails(b.dataset.viewSplit));$$('[data-edit-split]').forEach(b=>b.onclick=()=>openSplitModal(b.dataset.editSplit));$$('[data-delete-split]').forEach(b=>b.onclick=()=>deleteEntity('splits',b.dataset.deleteSplit,'دنگ حذف شد'));
+      $$('[data-view-split]').forEach(b=>b.onclick=()=>openSplitDetails(b.dataset.viewSplit));$$('[data-edit-split]').forEach(b=>b.onclick=()=>openSplitGroupModal(b.dataset.editSplit));$$('[data-delete-split]').forEach(b=>b.onclick=()=>deleteEntity('splits',b.dataset.deleteSplit,'گروه حذف شد'));
     }
 
     // Accessible DOM bars replace Canvas text, preventing Persian currency clipping on iOS/Safari.
@@ -2093,10 +2367,27 @@
     drawCategoryBars=function(){const root=$('#categoryBarChart');if(!root)return;const data=expenseDataForRange().slice(0,7),max=Math.max(1,...data.map(x=>x.value));root.innerHTML=data.length?data.map(d=>`<div class="bar-row"><span class="bar-label" title="${esc(d.name)}">${esc(d.name)}</span><span class="bar-track"><i class="bar-fill" style="--bar-p:${d.value/max*100}%;--bar-color:${d.color}"></i></span><strong class="bar-value">${moneyHTML(d.value,{compact:true,stack:true})}</strong></div>`).join(''):`<div class="empty"><p>هنوز هزینه‌ای در این بازه ثبت نشده است.</p></div>`};
     drawExpenseDonut=function(){const c=setupCanvas('expenseDonut');if(!c)return;const {ctx,w,h}=c,data=expenseData(),total=data.reduce((s,x)=>s+x.value,0);ctx.clearRect(0,0,w,h);const cx=w/2,cy=h/2,r=Math.min(w,h)*.30,inner=r*.80;let a=-Math.PI/2;if(!total){ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.arc(cx,cy,inner,0,Math.PI*2,true);ctx.fillStyle=css('--border-soft');ctx.fill('evenodd')}else data.forEach(d=>{const end=a+d.value/total*Math.PI*2;ctx.beginPath();ctx.arc(cx,cy,r,a,end);ctx.arc(cx,cy,inner,end,a,true);ctx.closePath();ctx.fillStyle=d.color;ctx.fill();ctx.strokeStyle=css('--surface-strong');ctx.lineWidth=2;ctx.stroke();a=end});const legend=$('#expenseLegend');if(legend)legend.innerHTML=data.slice(0,8).map(d=>`<div class="legend-item"><i class="legend-dot" style="--dot:${d.color}"></i>${esc(d.name)} ${formatNumber(d.value/total*100||0)}٪</div>`).join('')};
 
-    // Full Excel backup for split bills and participants.
+    // پشتیبان کامل اکسل برای گروه‌ها، هزینه‌ها، سهم‌ها و تسویه‌ها.
     const previousExcelToState=excelToState;
-    excelToState=function(sheets){const incoming=previousExcelToState(sheets);const bills=sheets['دنگ‌ها']||[],people=sheets['افراد دنگ']||[];if(bills.length>1){incoming.splits=bills.slice(1).map(r=>({id:r[0]||uid('split'),title:r[1]||'دنگ',total:num(r[2]),enteredCurrency:r[3]||'toman',method:r[4]||'equal',payerId:r[5]||'',date:r[6]||todayISO(),notes:r[7]||'',createdAt:r[8]||new Date().toISOString(),participants:[]}));const map=Object.fromEntries(incoming.splits.map(b=>[b.id,b]));people.slice(1).forEach(r=>{const b=map[r[0]];if(b)b.participants.push({id:r[1]||uid('person'),name:r[2]||'نفر',isMe:String(r[3])==='true'||r[3]===1,value:num(r[4]),amount:num(r[5]),settled:String(r[6])==='true'||r[6]===1})});incoming.splits=incoming.splits.map(migrateSplitBill)}return migrateState(incoming)};
-    exportExcel=function(){const tx=[['شناسه','نوع','شرح','یادداشت','حساب مبدا','حساب مقصد','دسته','تاریخ','مبلغ تومان','واحد ورود','زمان ایجاد'],...state.transactions.map(t=>[t.id,t.type,t.description||t.note||'',t.notes||'',t.accountId,t.toAccountId||'',t.categoryId||'',t.date,t.amount,t.enteredCurrency||'toman',t.createdAt||''])];const ac=[['شناسه','نام','نوع','موجودی اولیه تومان','رنگ','نماد'],...state.accounts.map(a=>[a.id,a.name,a.type,a.initialBalance,a.color,a.icon])];const ca=[['شناسه','نوع','نام','نماد','رنگ'],...state.categories.income.map(c=>[c.id,'income',c.name,c.icon,c.color]),...state.categories.expense.map(c=>[c.id,'expense',c.name,c.icon,c.color])];const bu=[['شناسه','شناسه دسته','بودجه تومان'],...state.budgets.map(b=>[b.id,b.categoryId,b.amount])];const go=[['شناسه','عنوان','مبلغ هدف تومان','موجودی فعلی تومان','تاریخ هدف','رنگ','نماد'],...state.goals.map(g=>[g.id,g.title,g.target,g.current,g.dueDate||'',g.color,g.icon])];const ins=[['شناسه','عنوان','مبلغ قسط تومان','تعداد','پرداخت شده','شناسه حساب','شناسه دسته','تاریخ شروع','روز سررسید'],...state.installments.map(i=>[i.id,i.title,i.installmentAmount,i.count,i.paidCount,i.accountId,i.categoryId,i.startDate,i.dayOfMonth])];const sp=[['شناسه','عنوان','مبلغ کل تومان','واحد ورود','روش','شناسه پرداخت‌کننده','تاریخ','یادداشت','زمان ایجاد'],...state.splits.map(b=>[b.id,b.title,b.total,b.enteredCurrency,b.method,b.payerId,b.date,b.notes||'',b.createdAt||''])];const spp=[['شناسه دنگ','شناسه فرد','نام','من','مقدار روش','سهم تومان','تسویه'],...state.splits.flatMap(b=>b.participants.map(p=>[b.id,p.id,p.name,p.isMe,p.value,p.amount,p.settled]))];const xml=`<?xml version="1.0" encoding="UTF-8"?><Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet" xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet">${excelSheet('تراکنش‌ها',tx)}${excelSheet('حساب‌ها',ac)}${excelSheet('دسته‌بندی‌ها',ca)}${excelSheet('بودجه‌ها',bu)}${excelSheet('هدف‌ها',go)}${excelSheet('اقساط',ins)}${excelSheet('دنگ‌ها',sp)}${excelSheet('افراد دنگ',spp)}</Workbook>`;downloadBlob('\ufeff'+xml,'application/vnd.ms-excel;charset=utf-8',`دارایی-من-${todayISO()}.xls`);toast('خروجی اکسل آماده شد','تراکنش‌ها، حساب‌ها و دنگ‌ها در فایل چندبرگی ذخیره شدند.','success')};
+    excelToState=function(sheets){
+      const incoming=previousExcelToState(sheets),groups=sheets['دنگ‌ها']||[],people=sheets['افراد دنگ']||[],expenses=sheets['هزینه‌های دنگ']||[],allocs=sheets['سهم‌های دنگ']||[],settles=sheets['تسویه‌های دنگ']||[];
+      if(groups.length>1&&expenses.length>1){
+        incoming.splits=groups.slice(1).map(r=>({id:r[0]||uid('split'),title:r[1]||'دنگ',enteredCurrency:r[2]||'toman',date:r[3]||todayISO(),notes:r[4]||'',createdAt:r[5]||new Date().toISOString(),participants:[],expenses:[],settlements:[]}));const map=Object.fromEntries(incoming.splits.map(b=>[b.id,b]));
+        people.slice(1).forEach(r=>{const b=map[r[0]];if(b)b.participants.push({id:r[1]||uid('person'),name:r[2]||'نفر',isMe:String(r[3])==='true'||r[3]===1})});
+        expenses.slice(1).forEach(r=>{const b=map[r[0]];if(b)b.expenses.push({id:r[1]||uid('spx'),title:r[2]||'هزینه',amount:num(r[3]),date:r[4]||b.date,payerId:r[5]||'',method:r[6]||'equal',createdAt:r[7]||new Date().toISOString(),allocations:[]})});
+        const expenseMap={};incoming.splits.forEach(b=>b.expenses.forEach(e=>expenseMap[`${b.id}|${e.id}`]=e));allocs.slice(1).forEach(r=>{const e=expenseMap[`${r[0]}|${r[1]}`];if(e)e.allocations.push({personId:r[2],value:num(r[3]),amount:num(r[4]),included:String(r[5])!=='false'&&r[5]!==0})});
+        settles.slice(1).forEach(r=>{const b=map[r[0]];if(b)b.settlements.push({id:r[1]||uid('settle'),fromId:r[2],toId:r[3],amount:num(r[4]),date:r[5]||todayISO(),createdAt:r[6]||new Date().toISOString()})});incoming.splits=incoming.splits.map(migrateSplitBill);
+      }else if(groups.length>1){
+        incoming.splits=groups.slice(1).map(r=>({id:r[0]||uid('split'),title:r[1]||'دنگ',total:num(r[2]),enteredCurrency:r[3]||'toman',method:r[4]||'equal',payerId:r[5]||'',date:r[6]||todayISO(),notes:r[7]||'',createdAt:r[8]||new Date().toISOString(),participants:[]}));const map=Object.fromEntries(incoming.splits.map(b=>[b.id,b]));
+        people.slice(1).forEach(r=>{const b=map[r[0]];if(b)b.participants.push({id:r[1]||uid('person'),name:r[2]||'نفر',isMe:String(r[3])==='true'||r[3]===1,value:num(r[4]),amount:num(r[5]),settled:String(r[6])==='true'||r[6]===1})});incoming.splits=incoming.splits.map(migrateSplitBill);
+      }
+      return migrateState(incoming);
+    };
+    exportExcel=function(){
+      const tx=[['شناسه','نوع','شرح','یادداشت','حساب مبدا','حساب مقصد','دسته','تاریخ','مبلغ تومان','واحد ورود','زمان ایجاد'],...state.transactions.map(t=>[t.id,t.type,t.description||t.note||'',t.notes||'',t.accountId,t.toAccountId||'',t.categoryId||'',t.date,t.amount,t.enteredCurrency||'toman',t.createdAt||''])];const ac=[['شناسه','نام','نوع','موجودی اولیه تومان','رنگ','نماد'],...state.accounts.map(a=>[a.id,a.name,a.type,a.initialBalance,a.color,a.icon])];const ca=[['شناسه','نوع','نام','نماد','رنگ'],...state.categories.income.map(c=>[c.id,'income',c.name,c.icon,c.color]),...state.categories.expense.map(c=>[c.id,'expense',c.name,c.icon,c.color])];const bu=[['شناسه','شناسه دسته','بودجه تومان'],...state.budgets.map(b=>[b.id,b.categoryId,b.amount])];const go=[['شناسه','عنوان','مبلغ هدف تومان','موجودی فعلی تومان','تاریخ هدف','رنگ','نماد'],...state.goals.map(g=>[g.id,g.title,g.target,g.current,g.dueDate||'',g.color,g.icon])];const ins=[['شناسه','عنوان','مبلغ قسط تومان','تعداد','پرداخت شده','شناسه حساب','شناسه دسته','تاریخ شروع','روز سررسید'],...state.installments.map(i=>[i.id,i.title,i.installmentAmount,i.count,i.paidCount,i.accountId,i.categoryId,i.startDate,i.dayOfMonth])];
+      const sp=[['شناسه','عنوان','واحد','تاریخ','یادداشت','زمان ایجاد'],...state.splits.map(b=>[b.id,b.title,b.enteredCurrency,b.date,b.notes||'',b.createdAt||''])];const spp=[['شناسه دنگ','شناسه فرد','نام','من'],...state.splits.flatMap(b=>b.participants.map(p=>[b.id,p.id,p.name,p.isMe]))];const spe=[['شناسه دنگ','شناسه هزینه','عنوان','مبلغ تومان','تاریخ','پرداخت‌کننده','روش','زمان ایجاد'],...state.splits.flatMap(b=>b.expenses.map(e=>[b.id,e.id,e.title,e.amount,e.date,e.payerId,e.method,e.createdAt||'']))];const spa=[['شناسه دنگ','شناسه هزینه','شناسه فرد','مقدار روش','سهم تومان','شرکت دارد'],...state.splits.flatMap(b=>b.expenses.flatMap(e=>e.allocations.map(a=>[b.id,e.id,a.personId,a.value,a.amount,a.included!==false])))];const sps=[['شناسه دنگ','شناسه تسویه','از','به','مبلغ تومان','تاریخ','زمان ایجاد'],...state.splits.flatMap(b=>b.settlements.map(x=>[b.id,x.id,x.fromId,x.toId,x.amount,x.date,x.createdAt||'']))];
+      const xml=`<?xml version="1.0" encoding="UTF-8"?><Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet" xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet">${excelSheet('تراکنش‌ها',tx)}${excelSheet('حساب‌ها',ac)}${excelSheet('دسته‌بندی‌ها',ca)}${excelSheet('بودجه‌ها',bu)}${excelSheet('هدف‌ها',go)}${excelSheet('اقساط',ins)}${excelSheet('دنگ‌ها',sp)}${excelSheet('افراد دنگ',spp)}${excelSheet('هزینه‌های دنگ',spe)}${excelSheet('سهم‌های دنگ',spa)}${excelSheet('تسویه‌های دنگ',sps)}</Workbook>`;downloadBlob('\ufeff'+xml,'application/vnd.ms-excel;charset=utf-8',`دارایی-من-${todayISO()}.xls`);toast('خروجی اکسل آماده شد','گروه‌ها، همهٔ هزینه‌ها و تسویه‌ها نیز ذخیره شدند.','success');
+    };
 
 
     function enhanceSelects(root=document){
